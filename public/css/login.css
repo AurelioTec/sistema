@@ -1,0 +1,90 @@
+/* Coded with love by Mutiullah Samim */
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #5f5f5f; /* Fundo cinza claro */
+}
+
+.user_card {
+    height: 400px;
+    width: 500px;
+    margin-top: auto;
+    margin-bottom: auto;
+    background: white; /* Fundo branco */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+}
+
+.brand_logo_container {
+    position: absolute;
+    height: 170px;
+    width: 170px;
+    top: -75px;
+    border-radius: 50%;
+    background: #3498db; /* Azul claro */
+    padding: 10px;
+    text-align: center;
+}
+
+.brand_logo {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border: 2px solid #ffffff; /* Borda branca */
+}
+.titulo {
+    h2 {
+        font-weight: bold;
+        color: #3498db;
+    }
+}
+form {
+    width: 350px;
+}
+.form_container {
+    width: 400;
+    margin-top: 100px;
+}
+
+.login_btn {
+    width: 100% !important;
+    background: #3498db !important; /* Azul claro */
+    color: white !important;
+}
+
+.login_btn:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+.login_container {
+    width: 100%;
+}
+
+.input-group-text {
+    background: #3498db !important; /* Azul claro */
+    color: white !important;
+    height: 40px;
+    border: 1px solid #3498db !important; /* Borda azul clara */
+    border-radius: 0.25rem 0 0 0.25rem !important;
+    width: 100%;
+}
+
+.input_user,
+.input_pass {
+    border: 1px solid #3498db; /* Borda azul clara */
+}
+
+.input_user:focus,
+.input_pass:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+    border-color: #3498db; /* Borda azul clara ao focar */
+}
