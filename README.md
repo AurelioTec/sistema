@@ -64,7 +64,6 @@ $ git clone https://github.com/AurelioTec/Sistema.git
 
 ```bash
 $ composer install
-$ npm install
 ```
 
 3. **Configure o arquivo `.env`**:
