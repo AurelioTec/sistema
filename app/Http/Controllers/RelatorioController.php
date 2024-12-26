@@ -8,6 +8,7 @@ use App\Models\Matricula;
 use App\Models\Turma;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Builder\Function_;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -34,11 +35,11 @@ class RelatorioController extends Controller
     public function show(Request $request)
     {
         $header = Matricula::with('turma')
-        ->whereHas('turma', function ($query) use ($request) {
-            $query->where('descricao', $request->turma)
-                ->where('classe', $request->classe)
-                ->where('periodo', $request->periodo);
-        })
+            ->whereHas('turma', function ($query) use ($request) {
+                $query->where('descricao', $request->turma)
+                    ->where('classe', $request->classe)
+                    ->where('periodo', $request->periodo);
+            })
             ->first();
 
         $alunos = Matricula::with(['inscricao', 'turma', 'usuario'])
@@ -50,6 +51,21 @@ class RelatorioController extends Controller
             ->get();
         return view('relatorios.alunoturma', compact('alunos', 'request', 'header'));
     }
+
+    public function getFicha($anoletivo, $aluno)
+    {
+        // Buscar o aluno por ID, considerando a turma e o ano letivo
+        $aluno = Matricula::with(['inscricao', 'turma', 'usuario'])
+            ->whereHas('turma', function ($query) use ($anoletivo) {
+                $query->where('anolectivo', $anoletivo);
+            })
+            ->get()
+            ->where('nomealuno', $aluno)
+            ->first();
+        return view('relatorios.fichaaluno', compact('aluno'));
+    }
+
+
 
     public function getTurmas($classe, $periodo)
     {

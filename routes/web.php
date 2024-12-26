@@ -58,7 +58,7 @@ Route::group(['middleware' => "auth"], function () {
     Route::get('relatorio', [RelatorioController::class, 'index'])->name('relatorio');
     Route::get('relatorio/turma/{classe}/{periodo}', [RelatorioController::class, 'getTurmas'])->name('relatorio.turma');
     Route::get('relatorio/turma', [RelatorioController::class, 'show'])->name('relatorio.turmaluno');
-    //Route::delete('delete/{id}', [FuncionariosController::class, 'deletar'])->name('funcionario.apagar');
+    Route::get('relatorio/ficha/{anoletivo}/{aluno}', [RelatorioController::class, 'getFicha'])->name('relatorio.ficha');
 });
 
 

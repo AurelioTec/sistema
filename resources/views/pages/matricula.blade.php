@@ -46,7 +46,8 @@
                                 class="btn text-success">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <a href="" class="btn text-primary">
+                            <a href="{{ route('relatorio.ficha', [$matri->turma->anolectivo, $matri->inscricao->nomealuno]) }}"
+                                class="btn text-primary">
                                 <i class="fa fa-print"></i>
                             </a>
                             <a href="#" class="btn text-danger" data-confirm-delete="true">
