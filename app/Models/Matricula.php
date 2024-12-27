@@ -15,6 +15,11 @@ class Matricula extends Model
         return $this->belongsTo(Inscricao::class, 'inscricaos_id');
     }
 
+    public function municipio()
+    {
+        return $this->hasOneThrough(Municipios::class, Inscricao::class, 'id', 'id', 'inscricao_id', 'municipio_id');
+    }
+
     // Relação com a turma
     public function turma()
     {
@@ -27,4 +32,3 @@ class Matricula extends Model
         return $this->belongsTo(User::class, 'users_id');
     }
 }
-

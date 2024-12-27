@@ -46,7 +46,7 @@
                                 class="btn text-success">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <a href="{{ route('relatorio.ficha', [$matri->turma->anolectivo, $matri->inscricao->nomealuno]) }}"
+                            <a href="{{ route('relatorio.ficha', [$matri->turma->anolectivo, Illuminate\Support\Facades\Crypt::encryptString($matri->id)]) }}"
                                 class="btn text-primary">
                                 <i class="fa fa-print"></i>
                             </a>

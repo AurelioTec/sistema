@@ -27,14 +27,19 @@
 
         <div class="row mb-3">
             <div class="col-md-6">
-                {{ dd($aluno) }}
-                <label><strong>Idade Provável até Maio:</strong><span
-                        class="text-decoration-underline"></span>anos</label>
+                <label><strong>Idade Provável até Agosto: </strong><span
+                        class="text-decoration-underline">{{ \Carbon\Carbon::parse($aluno->inscricao->datanascimento)->age }}</span>anos</label>
             </div>
             <div class="col-md-6">
-                <strong>SEXO:</strong>
-                <label class="form-check-label me-3">M<input type="checkbox" class="ms-1"></label>
-                <label class="form-check-label">F<input type="checkbox" class="ms-1"></label>
+                <strong>GENERO:</strong>
+                @if ($aluno->inscricao->genero == 'M')
+                    <label class="form-check-label me-3">M<input type="checkbox" checked disabled
+                            class="ms-1"></label>
+                    <label class="form-check-label">F<input type="checkbox" disabled class="ms-1"></label>
+                @else
+                    <label class="form-check-label me-3">M<input type="checkbox" disabled class="ms-1"></label>
+                    <label class="form-check-label">F<input type="checkbox" checked disabled class="ms-1"></label>
+                @endif
             </div>
         </div>
 
@@ -43,44 +48,70 @@
                 <label><strong>Processo Individual Nº:</strong><span class="text-decoration-underline"></span></label>
             </div>
             <div class="col-md-6">
-                <label><strong>Nº de Matrícula:</strong><span class="text-decoration-underline"></span></label>
+                <label><strong>Nº de Matrícula: </strong><span
+                        class="text-decoration-underline">{{ $aluno->numatricula }}</span></label>
             </div>
         </div>
 
-        <p class="section-title">Dados do Aluno</p>
-        <p>Matrícula na<span class="text-decoration-underline"></span> classe pela <span
-                class="text-decoration-underline"></span> ª vez | Ano Lectivo de 20<span
-                class="text-decoration-underline"></span>| Inscrição nº<span class="text-decoration-underline"></span>
+        <p class="section-title text-center fs-5 mb-0">Dados do Aluno</p>
+        <hr>
+        <p class="mt-0">Matrícula na <span class="text-decoration-underline">{{ $aluno->turma->classe }}</span> classe
+            pela
+            @if ($aluno->tipomatricula == 'Novo')
+                <span class="text-decoration-underline">1ª vez </span>
+            @else
+                <span class="text-decoration-underline">2ª vez </span>
+            @endif | Ano Lectivo de <span
+                class="text-decoration-underline">{{ $aluno->turma->anolectivo }}</span>| Inscrição
+            nº <span class="text-decoration-underline"></span>
         </p>
-        <p>Nome:<span class="text-decoration-underline"></span></p>
-        <p>Data de Nascimento:<span class="text-decoration-underline"></span>| BI nº<span
-                class="text-decoration-underline"></span>| Emitido aos <span class="text-decoration-underline"></span>
+        <p>Nome: <span class="text-decoration-underline fw-bold fs-6">{{ $aluno->inscricao->nomealuno }}</span></p>
+        <p>Data de Nascimento: <span
+                class="text-decoration-underline">{{ \Carbon\Carbon::parse($aluno->datanascimento)->format('d/m/Y') }}</span>|
+            {{ $aluno->inscricao->doctipo }}
+            nº <span class="text-decoration-underline">{{ $aluno->inscricao->docnumero }}</span>| Emitido aos <span
+                class="text-decoration-underline">{{ \Carbon\Carbon::parse($aluno->inscricao->dataemissao)->format('d/m/Y') }}</span>
         </p>
-        <p>Arquivo de Identificação de<span class="text-decoration-underline"></span>| Documento Militar nº<span
-                class="text-decoration-underline"></span></p>
-        <p>Filho de<span class="text-decoration-underline"></span>e de <span class="text-decoration-underline"></span>
+        <p>Arquivo de Identificação de <span class="text-decoration-underline">Benguela</span>| Documento Militar
+            nº<span class="text-decoration-underline"></span></p>
+        <p>Filho de <span class="text-decoration-underline">{{ $aluno->inscricao->nomepai }}</span>e de <span
+                class="text-decoration-underline">{{ $aluno->inscricao->nomemae }}</span>
         </p>
-        <p>Morada do aluno:<span class="text-decoration-underline"></span>Rua: <span
-                class="text-decoration-underline"></span></p>
+        <p>Morada do aluno: <span class="text-decoration-underline">{{ $aluno->inscricao->bairro }}</span> Rua:
+            <span class="text-decoration-underline">{{ $aluno->inscricao->rua }}</span>
+        </p>
+        <hr class="mb-0">
 
-        <p class="section-title">Informações Adicionais</p>
+        <p class="section-title text-center fs-5 mt-0 mb-0">Informações Adicionais</p>
+        <hr>
+        <p>Turma: <span class="text-decoration-underline"></span> | Sala: <span
+                class="text-decoration-underline"></span>
+            | Periodo: <span class="text-decoration-underline"></span> Lígua Estrangeira de Opção: <span
+                class="text-decoration-underline"></span>
+            |Ano Lectivo: <span class="text-decoration-underline"></span></p>
         <p>Encarregado de Educação:<span class="text-decoration-underline"></span>| Telf. nº<span
                 class="text-decoration-underline"></span></p>
-        <p>Língua Estrangeira de Opção: <span class="text-decoration-underline"></span>| Área de Conhecimento: <span
-                class="text-decoration-underline"></span></p>
-        <p>Data: <span class="text-decoration-underline"></span> de <span class="text-decoration-underline"></span>de
+        <p classe="mb-0">Data: <span class="text-decoration-underline"></span> de <span
+                class="text-decoration-underline"></span>de
             <span class="text-decoration-underline"></span>
         </p>
-
-        <p class="section-title">Autorização</p>
-        <p>
-            AUTORIZO A MATRÍCULA <span class="text-decoration-underline"></span>| ALUNO OU ENCARREGADO DE EDUCAÇÃO<span
-                class="text-decoration-underline"></span><br>
-            O DIRECTOR: <span class="text-decoration-underline"></span> | O FUNCIONÁRIO: <span
-                class="text-decoration-underline"></span>
-        </p>
-
-        <p>Matrícula Efetuada em <span class="text-decoration-underline"></span></p>
+        <hr class="mb-0 mt-0">
+        <div style="text-align: center; margin-top: 2px; padding-bottom: 2px;">
+            <p
+                style="display: inline-block; width: 70%; margin-top: 0 auto; border-bottom: 1px solid black; padding-bottom: 30px; padding-top: 2px;">
+                ALUNO OU ENCARREGADO DE EDUCAÇÃO
+            </p>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+            <div style="width: 30%; text-align: center; border-top: 1px solid black; margin-top: 10px;">
+                O DIRECTOR:
+            </div>
+            <div style="width: 30%; text-align: center; border-top: 1px solid black;">
+                O FUNCIONÁRIO:
+            </div>
+        </div>
+        <p class="text-center pb-0">Matrícula Efetuada em <span class="text-decoration-underline"></span></p>
+        <hr class="pt-0">
         <hr>
         <p>
             Nome: ______________________________ | Data de Inscrição: ___/___/______ | INSCRIÇÃO Nº _________<br>
