@@ -28,10 +28,7 @@ class MatriculaController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function show($id)
-    {
-        
-    }
+    public function show($id) {}
 
     /**
      * Store a newly created resource in storage.
@@ -46,7 +43,15 @@ class MatriculaController extends Controller
         } else {
             $matricula = new Matricula();
         }
-        $nunmatricula = Funcoes::gerarNumeroMatricula($request->nomeAluno);
+        // Obter o ano atual
+        $anoAtual = date('Y');
+        $inicialNome = strtoupper(substr($request->nomeAluno, 0, 1));
+        // Obter o maior número de matrícula existente no ano e inicial fornecidos
+        $ultimoNumMatricula = Matricula::where('numatricula', 'like', "{$anoAtual}{$inicialNome}%")
+            ->orderBy('numatricula', 'desc')
+            ->value('numatricula');
+
+        $nunmatricula = Funcoes::gerarNumeroMatricula($request->nomeAluno, $ultimoNumMatricula);
         if (isset($request->anexo)) {
             $request->validate([
                 'anexo' => 'required|file|mimes:pdf|max:2048', // 2048 KB = 2MB
@@ -54,7 +59,6 @@ class MatriculaController extends Controller
             $doc = $request->file('anexo');
             $extencao = $doc->extension();
             // Obter a inicial do nome do aluno
-            $inicialNome = strtoupper(substr($request->nomeAluno, 0, 1));
             $docNome = md5($doc->getClientOriginalName() . strtotime('now')) . $extencao;
             $caminho = Storage::makeDirectory(public_path('docs/upload/aluno/' . $inicialNome . '/'));
             $doc->storeAs($caminho, $docNome);
@@ -86,8 +90,29 @@ class MatriculaController extends Controller
                     Alert::success('Sucesso', 'Dados do aluno atualizados');
                     return redirect()->back();
                 } else {
+                    $lastId = $matricula->id;
+
+                    if (!$lastId) {
+                        throw new \Exception('ID da matrícula não encontrado');
+                    }
+
+                    $ano = $request->anoletivo;
+
+                    $aluno = Matricula::with(['inscricao.municipios', 'turma', 'usuario'])
+                        ->where('id', $lastId)
+                        ->whereHas('turma', function ($query) use ($ano) {
+                            $query->where('anolectivo', $ano);
+                        })
+                        ->first();
+
+                    if (!$aluno) {
+                        throw new \Exception('Aluno não encontrado com os filtros especificados');
+                    }
+
+                    dd($aluno);
+
                     Alert::success('Sucesso', 'Aluno inscrito com sucesso');
-                    return redirect()->back();
+                    return view('relatorios.fichaaluno', compact('aluno'));
                 }
             } else {
                 Alert::error('Error', 'Erro ao inscrever o aluno');

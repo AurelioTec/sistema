@@ -227,6 +227,7 @@
                             <input type="hidden" name="id" id="id">
                             <input type="hidden" name="alunoId" id="alunoId">
                             <input type="hidden" name="nomeAluno" id="nomeluno" >
+                            <input type="hidden" name="anoletivo" id="anoletivo" >
                             <div class="col-3">
                                 <label for="classe" class="form-label">Classe</label>
                                 <select id="classe" class="form-control" name="classe" required>
