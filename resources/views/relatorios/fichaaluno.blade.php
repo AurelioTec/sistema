@@ -84,16 +84,20 @@
 
         <p class="section-title text-center fs-5 mt-0 mb-0">Informações Adicionais</p>
         <hr>
-        <p>Turma: <span class="text-decoration-underline"></span> | Sala: <span
-                class="text-decoration-underline"></span>
-            | Periodo: <span class="text-decoration-underline"></span> Lígua Estrangeira de Opção: <span
-                class="text-decoration-underline"></span>
-            |Ano Lectivo: <span class="text-decoration-underline"></span></p>
-        <p>Encarregado de Educação:<span class="text-decoration-underline"></span>| Telf. nº<span
-                class="text-decoration-underline"></span></p>
-        <p classe="mb-0">Data: <span class="text-decoration-underline"></span> de <span
-                class="text-decoration-underline"></span>de
-            <span class="text-decoration-underline"></span>
+        <p>Turma: <span class="text-decoration-underline">{{ $aluno->turma->descricao }}</span> | Sala: <span
+                class="text-decoration-underline">{{ $aluno->turma->sala }}</span>
+            | Periodo: <span class="text-decoration-underline">{{ $aluno->turma->periodo }}</span> Lígua Estrangeira de
+            Opção: <span class="text-decoration-underline">{{ $aluno->lestrangeira }}</span>
+            |Ano Lectivo: <span class="text-decoration-underline">{{ $aluno->turma->anolectivo }}</span></p>
+        <p>Encarregado de Educação: <span class="text-decoration-underline">{{ $aluno->encarregado }}</span>| Telf.
+            nº <span class="text-decoration-underline">{{ $aluno->telfencarregado }}</span></p>
+        <p classe="mb-0">Data: <span
+                class="text-decoration-underline">{{ \Carbon\Carbon::parse($aluno->datamatricula)->format('d') }}</span>
+            de <span
+                class="text-decoration-underline">{{ \Carbon\Carbon::parse($aluno->datamatricula)->format('m') }}</span>
+            de
+            <span
+                class="text-decoration-underline">{{ \Carbon\Carbon::parse($aluno->datamatricula)->format('Y') }}</span>
         </p>
         <hr class="mb-0 mt-0">
         <div style="text-align: center; margin-top: 2px; padding-bottom: 2px;">
@@ -110,16 +114,35 @@
                 O FUNCIONÁRIO:
             </div>
         </div>
-        <p class="text-center pb-0">Matrícula Efetuada em <span class="text-decoration-underline"></span></p>
-        <hr class="pt-0">
-        <hr>
-        <p>
-            Nome: ______________________________ | Data de Inscrição: ___/___/______ | INSCRIÇÃO Nº _________<br>
-            Talão de Matrícula na _______ Classe
+        <p class="text-center pb-0">Matrícula Efetuada em {{ $aluno->inscricao->municipios->muninome }}, @if (\Carbon\Carbon::parse($aluno->datamatricula)->format('d') == 1)
+                a,<span
+                    class="text-decoration-underline">{{ \Carbon\Carbon::parse($aluno->datamatricula)->format('d') }}</span>
+            @else
+                aos, <span
+                    class="text-decoration-underline">{{ \Carbon\Carbon::parse($aluno->datamatricula)->format('d') }}</span>
+            @endif
+            de <span
+                class="text-decoration-underline">{{ ucfirst(\Carbon\Carbon::parse($aluno->datamatricula)->locale('pt')->translatedFormat('F')) }}</span>
+            de <span
+                class="text-decoration-underline">{{ \Carbon\Carbon::parse($aluno->datamatricula)->format('Y') }}</span>
         </p>
-
-        <p class="text-center">CONSERVAR ESTE TALÃO ATÉ À ABERTURA DAS AULAS</p>
-        <hr>
+        <hr class="pt-0">
+        <p style="font-size: 11pt" class="pt-0 mt-0 text-center">
+            Nome: {{ $aluno->inscricao->nomealuno }} | Data da matricula:
+            {{ \Carbon\Carbon::parse($aluno->datamatricula)->format('d/m/Y') }}| Matricula Nº
+            {{ $aluno->numatricula }}<br>
+            Talão de Matrícula na {{ $aluno->turma->classe }} Classe, Turma: {{ $aluno->turma->descricao }}, Sala:
+            {{ $aluno->turma->sala }}, Periodo: {{ $aluno->turma->periodo }}, Ano lectivo:
+            {{ $aluno->turma->anolectivo }}
+        </p>
+        <hr class="pb-0 mb-0">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px">
+            <h6 class="text-left " style="font-size: 8pt">Fonte de Dados SIGA
+            </h6>
+            <h6 class="text-center" style="font-size: 8pt">CONSERVAR ESTE TALÃO ATÉ À ABERTURA DAS AULAS</h6>
+            <h6 class="text-right" style="font-size: 8pt"><span class="text-right">Utilizador:
+                    {{ Auth::user()->name }}</span></h6>
+        </div>
     </div>
     <script>
         // Função para acionar a impressão ao carregar a página
