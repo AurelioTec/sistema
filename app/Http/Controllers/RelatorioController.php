@@ -19,16 +19,13 @@ class RelatorioController extends Controller
     {
         $userId = Auth::id();
         $turmas = Turma::all();
-        $anoletivo = date('Y');
-        $config = ConfigIni::where('anoletivo', $anoletivo)
+        $ultimoAno = ConfigIni::orderBy('anoletivo', 'desc') // Ordena por anoletivo decrescente
+            ->selectRaw('anoletivo')                // Seleciona os campos necessários
+            ->first();                                     // Pega o primeiro registro
+        $config = ConfigIni::where('anoletivo', $ultimoAno->anoletivo)
             ->selectRaw('anoletivo, salas')
             ->get();
-        if ($config->isEmpty()) {
-            $anoletivo = date('Y') - 1;
-            $config = ConfigIni::where('anoletivo', $anoletivo)
-                ->selectRaw('anoletivo, salas')
-                ->get();
-        }
+
         $funcionario = Funcionarios::where('Users_id', $userId)->first(); // Acessa o funcionário relacionado
         return view('pages.relatorio', compact('funcionario', 'turmas', 'config'));
     }

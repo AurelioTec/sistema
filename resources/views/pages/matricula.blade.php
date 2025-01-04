@@ -18,7 +18,6 @@
                     <th>#</th>
                     <th>Nº de Matricula</th>
                     <th>Nome</th>
-                    <th>Classe</th>
                     <th>Turma</th>
                     <th>Periodo</th>
                     <th>Sala</th>
@@ -36,8 +35,7 @@
                         <td>{{ $i++ }}</td>
                         <td>{{ $matri->numatricula }}</td>
                         <td>{{ $matri->inscricao->nomealuno }}</td>
-                        <td>{{ $matri->turma->classe }}</td>
-                        <td>{{ $matri->turma->descricao }}</td>
+                        <td>{{ $matri->turma->codigo }}</td>
                         <td>{{ $matri->turma->periodo }}</td>
                         <td>{{ $matri->turma->sala }}</td>
                         <td>{{ $matri->turma->anolectivo }}</td>

@@ -27,29 +27,40 @@
                 </tr>
             </thead>
             <tbody>
-                @php
-                    $i = 1;
-                @endphp
-                @if ($alunos->isEmpty())
+                @foreach ($alunos as $key => $aluno)
                     <tr>
-                        <td colspan="9" class="text-center">Nenhum registro encontrado</td>
-                    </tr>
-                @else
-                    @foreach ($alunos as $aluno)
-                        <tr>
-                            <td>{{ $i++ }}</td>
-                            <td><img src="{{ asset('img/upload/aluno/' . $aluno->foto) }}" alt="foto"
+                        {{-- Exibe o índice ou "-" se for uma entrada padrão --}}
+                        <td>
+                            @if (isset($aluno->id) && $aluno->id !== null)
+                                {{ $key + 1 }}
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td>
+                            @if (isset($aluno->foto) && $aluno->foto !== '-')
+                                <img src="{{ asset('img/upload/aluno/' . $aluno->foto) }}" alt="foto"
                                     style="width: 38px">
-                            </td>
-                            <td>{{ $aluno->nomealuno }}</td>
-                            <td>{{ $aluno->genero }}</td>
-                            <td>{{ \Carbon\Carbon::parse($aluno->datanascimento)->format('d/m/Y') }}</td>
-                            <td>{{ $aluno->bairro }}</td>
-                            <td>{{ $aluno->telf }}</td>
-                            <td>{{ $aluno->estado }}</td>
-                            <td>
-                                <a href="#Matricula" class="btn text-primary" title="Matricular aluno"data-bs-toggle="modal"
-                                    data-id="{{ $aluno->id }}">
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td>{{ $aluno->nomealuno ?? '-' }}</td>
+                        <td>{{ $aluno->genero ?? '-' }}</td>
+                        <td>
+                            @if (!empty($aluno->datanascimento))
+                                {{ \Carbon\Carbon::parse($aluno->datanascimento)->format('d/m/Y') }}
+                            @else
+                                -
+                            @endif
+                        </td>
+                        <td>{{ $aluno->bairro ?? '-' }}</td>
+                        <td>{{ $aluno->telf ?? '-' }}</td>
+                        <td>{{ $aluno->estado ?? '-' }}</td>
+                        <td>
+                            @if ($aluno->id)
+                                <a href="#Matricula" class="btn text-primary" title="Matricular aluno"
+                                    data-bs-toggle="modal" data-id="{{ $aluno->id }}">
                                     <i class="fa fa-user-graduate"></i>
                                 </a>
                                 <a href="#Cadastro" title="Editar dados do aluno" data-bs-toggle="modal"
@@ -60,10 +71,12 @@
                                     data-confirm-delete="true" title="Remover aluno">
                                     <i class="fa fa-trash"></i>
                                 </a>
-                            </td>
-                        </tr>
-                    @endforeach
-                @endif
+                            @else
+                                -
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -226,8 +239,8 @@
                             @csrf
                             <input type="hidden" name="id" id="id">
                             <input type="hidden" name="alunoId" id="alunoId">
-                            <input type="hidden" name="nomeAluno" id="nomeluno" >
-                            <input type="hidden" name="anoletivo" id="anoletivo" >
+                            <input type="hidden" name="nomeAluno" id="nomeluno">
+                            <input type="hidden" name="anoletivo" id="anoletivo">
                             <div class="col-3">
                                 <label for="classe" class="form-label">Classe</label>
                                 <select id="classe" class="form-control" name="classe" required>
@@ -329,6 +342,14 @@
             $('#obs').val("");
             $('#foto').val("");
         }
+
+        $(document).ready(function() {
+            $('#tabInscricao').DataTable({
+                language: {
+                    emptyTable: "Nenhum registro encontrado."
+                }
+            });
+        });
     </script>
     </main>
 @endsection

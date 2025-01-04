@@ -16,9 +16,25 @@ class InscricaoController extends Controller
 {
     public function index()
     {
-        $alunos = Inscricao::with('municipios')->where('estado', 'Pendente')->get();
+        $alunos = Inscricao::with('municipios')
+        ->where('estado', 'Pendente')
+        ->get();
+
         if ($alunos->isEmpty()) {
-            $alunos = collect();  // Retorna uma coleção vazia se não houver registros
+            $alunos = collect([
+                [
+                    'foto' => '-', // Defina valores padrão
+                    'nomealuno' => '-',
+                    'genero' => '-',
+                    'datanascimento' => null,
+                    'bairro' => '-',
+                    'telf' => '-',
+                    'estado' => '-',
+                    'id' => null,
+                ]
+            ])->map(function ($item) {
+                return (object) $item; // Converta cada item para um objeto
+            });
         }
         $inscricao = Inscricao::with('municipios')->get();
         $userId = Auth::id();

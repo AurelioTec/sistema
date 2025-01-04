@@ -90,7 +90,6 @@
                             $.each(data, function(key, turma) {
                                 $('#turma').append('<option value="' + turma.id + '">' + turma
                                     .descricao + '</option>');
-                                $('#anoletivo').val(turma.anoletivo)
                             });
                         } // Fechando o parêntese corretamente
                     });
