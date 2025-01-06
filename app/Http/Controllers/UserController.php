@@ -6,6 +6,7 @@ use App\Models\Funcionarios;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
@@ -65,5 +66,41 @@ class UserController extends Controller
         User::find($id)->delete();
         Alert::success('Sucesso', 'Usuario apagado com sucesso');
         return redirect()->back();
+    }
+
+    //função para alterar a senha so usuario
+    public function updatePassword(Request $request)
+    {
+        // Validação da requisição (opcional, mas recomendada)
+        $request->validate([
+            'id' => 'required|exists:users,id', // Verifica se o ID existe no banco
+            'password' => 'required|min:6|confirmed', // Verifica se a senha tem pelo menos 6 caracteres e se o campo 'password_confirmation' está presente
+        ]);
+
+        // Encontrar o usuário pelo ID fornecido
+        $user = User::find($request->id);
+
+        if ($user) {
+            // Atualizar a senha do usuário
+            $user->password = bcrypt($request->password); // Criptografar a nova senha
+            $user->save(); // Salvar no banco
+
+            // Retornar uma resposta de sucesso
+            Alert::success('Sucesso', 'Senha atualizada com sucesso');
+            return redirect()->back();
+        } else {
+            // Caso o usuário não seja encontrado
+            Alert::error('Erro', 'Usuário não encontrado');
+            return redirect()->back();
+        }
+    }
+
+    public function show()
+    {
+
+        $user = Auth::User();
+
+        $funcionario = Funcionarios::where('Users_id', $user->id)->first();
+        return view('pages.perfil', compact('user', 'funcionario'));
     }
 }

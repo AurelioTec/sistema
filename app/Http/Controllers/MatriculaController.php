@@ -46,6 +46,18 @@ class MatriculaController extends Controller
             $matricula = new Matricula();
         }
 
+        // Verificar se o aluno já está matriculado na mesma turma
+        $existeMatricula = Matricula::where('inscricaos_id', $request->alunoId)
+            ->where('turmas_id', $request->turma)
+            ->where('estado', 'Ativo')
+            ->exists();
+
+        if ($existeMatricula) {
+            // Se já estiver matriculado, exibe mensagem de erro
+            Alert::error('Erro', 'Este aluno já está matriculado nesta turma.');
+            return redirect()->back();
+        }
+
         // Verificar o número de alunos já matriculados na turma
         $numAlunos = Matricula::where('turmas_id', $request->turma)->count();
         if ($numAlunos >= 50) {
@@ -73,9 +85,11 @@ class MatriculaController extends Controller
 
             $doc = $request->file('anexo');
             $extensao = $doc->extension();
-            $docNome = md5($doc->getClientOriginalName() . strtotime('now')) . $extensao;
+            $docNome = md5($doc->getClientOriginalName() . strtotime('now')) . '.' . $extensao;
             $caminho = Storage::makeDirectory(public_path('docs/upload/aluno/' . $inicialNome . '/'));
-            $doc->storeAs($caminho, $docNome);
+
+            // O método putFileAs irá criar automaticamente a pasta caso ela não exista
+            Storage::disk('public')->putFileAs($caminho, $doc, $docNome);
             $matricula->anexo = $docNome;
         }
 
@@ -103,7 +117,7 @@ class MatriculaController extends Controller
 
         if ($matricula) {
             Alert::success('Sucesso', 'Aluno matriculado com sucesso');
-            return redirect()->route('turmas.visualizar', ['id' => $request->turma]);
+            return redirect()->back();
         } else {
             Alert::error('Erro', 'Erro ao matricular o aluno');
             return redirect()->back();

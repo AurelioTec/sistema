@@ -45,12 +45,17 @@
                                 <i class="fa fa-edit"></i>
                             </a>
                             <a href="{{ route('relatorio.ficha', [$matri->turma->anolectivo, Illuminate\Support\Facades\Crypt::encryptString($matri->id)]) }}"
-                                class="btn text-primary">
+                                class="btn text-primary" target="_blank" rel="noopener noreferrer">
                                 <i class="fa fa-print"></i>
                             </a>
                             <a href="#" class="btn text-danger" data-confirm-delete="true">
                                 <i class="fa fa-trash"></i>
                             </a>
+                            <a href="{{ asset('storage/' . $matri->anexo) }}" class="btn text-warning" target="_blank"
+                                rel="noopener noreferrer" title="Baixar o arquivo">
+                                <i class="fa fa-paperclip"></i>
+                            </a>
+
                         </td>
                     </tr>
                 @endforeach

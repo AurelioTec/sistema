@@ -11,7 +11,7 @@
         <div class="row">
             <div class="admin-dashboard">
                 <div class="icon">
-                    <i class="fas fa-users"></i>
+                    <a href="#" target="_blank" rel="noopener noreferrer"> <i class="fas fa-users"></i></a>
                     <p>Funcionarios</p>
                 </div>
                 <div class="icon">

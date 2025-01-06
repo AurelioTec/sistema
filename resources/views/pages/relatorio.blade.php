@@ -4,12 +4,6 @@
 @endsection
 @section('conteudo')
     <div class="container bg-light">
-        <div class="row">
-            <div class="col-sm-3">
-
-
-            </div>
-        </div>
         <div class="container px-4 py-5" id="featured-3">
             <h2 class="pb-2 border-bottom">Relatorio</h2>
             <div class="row g-4 py-5 row-cols-1 row-cols-lg-3 text-center">
@@ -55,7 +49,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
 
@@ -105,7 +98,8 @@
                             </div>
                             <div class="modal-footer ">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-primary" target="_blank">Pesquisar</button>
+                                <button type="submit" class="btn btn-primary" target="_blank"
+                                    rel="noopener noreferrer">Pesquisar</button>
                             </div>
                         </form>
                     </div>

@@ -33,7 +33,10 @@ Route::group(['middleware' => "auth"], function () {
     Route::delete('configini/encerrar/{id}', [ConfigIniController::class, 'encerrar'])->name('config.encerrar');
     //Rotas Usuarios
     Route::get('usuario', [UserController::class, 'index'])->name('usuario');
-    Route::post('usuario', [UserController::class, 'store'])->name('usuario.cadastrar');
+    Route::post('usuario/cadastrar', [UserController::class, 'store'])->name('usuario.cadastrar');
+    Route::post('usuario/updatepass', [UserController::class, 'updatePassword'])->name('usuario.update');
+    Route::post('usuario/updatefoto', [FuncionariosController::class, 'updateProfilePicture'])->name('usuario.updatefoto');
+    Route::get('usuario/perfil', [UserController::class, 'show'])->name('usuario.perfil');
     Route::delete('usuario/apagar/{id}', [UserController::class, 'deletar'])->name('usuario.apagar');
     //Rotas Funcionarios
     Route::get('funcionario', [FuncionariosController::class, 'index'])->name('funcionario');

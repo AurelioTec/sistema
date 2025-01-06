@@ -74,4 +74,52 @@ class FuncionariosController extends Controller
             return redirect()->back();
         }
     }
+
+    public function updateProfilePicture(Request $request)
+    {
+        // Validação da requisição (opcional)
+        $request->validate([
+            'id' => 'required|exists:users,id', // Verifica se o ID do usuário existe
+            'foto' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048', // Verifica se a imagem é válida
+        ]);
+
+        // Encontrar o usuário
+        $user = User::find($request->id);
+        $funcio = Funcionarios::where('users_id', $user->id)->first();
+
+        if ($user && $funcio) {
+            // Verificar se o arquivo de imagem foi enviado
+            if ($request->hasFile('foto')) {
+                // Remover a foto antiga (se houver)
+                if ($funcio->foto && file_exists(public_path('img/upload/funcio/' . $funcio->foto))) {
+
+                    unlink(public_path('img/upload/funcio/' . $funcio->foto));
+                }
+
+                // Obter a nova imagem
+                $imagem = $request->foto;
+                $extencao = $imagem->extension();
+                $imgNome = md5($imagem->getClientOriginalName() . strtotime('now')) . '.' . $extencao;
+
+                // Salvar a nova foto no diretório de upload
+                $imagem->move(public_path('img/upload/funcio/'), $imgNome);
+
+                // Atualizar o caminho da foto no banco de dados
+                $funcio->foto = $imgNome;
+                $funcio->save();
+
+                // Retornar uma resposta de sucesso
+                Alert::success('Sucesso', 'Foto de perfil atualizada com sucesso');
+                return redirect()->back();
+            } else {
+                // Se a foto não for enviada
+                Alert::error('Erro', 'Nenhuma foto enviada');
+                return redirect()->back();
+            }
+        } else {
+            // Se o usuário ou o funcionário não for encontrado
+            Alert::error('Erro', 'Usuário ou funcionário não encontrado');
+            return redirect()->back();
+        }
+    }
 }

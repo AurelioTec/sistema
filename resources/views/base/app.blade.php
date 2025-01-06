@@ -182,12 +182,12 @@
                 <div class="navbar-nav">
                     @if (Auth::check() && $funcionario && $funcionario->foto)
                         <!-- Verifica se o usuário está logado e tem uma imagem de perfil -->
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('usuario.perfil') }}">
                             <img src="{{ asset('img/upload/funcio/' . $funcionario->foto) }}" height="30"
                                 width="30" alt="Imagem do Usuário">
                         </a>
                     @else
-                        <a class="nav-link " href="#">
+                        <a class="nav-link " href="{{ route('usuario.perfil') }}">
                             <img src="{{ asset('img/blade/logo.png') }}" height="30" width="30" alt="Logo">
                         </a>
                     @endif
