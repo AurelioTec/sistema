@@ -16,6 +16,14 @@
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script>
         $(document).ready(function() {
+
+            if ($.fn.dataTable.isDataTable('#tabela')) {
+                $('.tabela').DataTable().destroy();
+            }
+
+            $('.tabela').DataTable({
+                "pageLength": 5 // Define o número de registros por página
+            });
             $('#provincia').change(function() {
                 var provinciaId = $(this).val();
                 if (provinciaId) {
@@ -48,10 +56,8 @@
                 }
             });
 
-
-            // Evento para capturar o clique na âncora
-            $('a[data-bs-toggle="modal"]').on('click', function() {
-                var alunoId = $(this).data('id'); // Pega o ID armazenado no atributo data-id
+            function buscarAluno($id) {
+                var alunoId = $id; // Pega o ID armazenado no atributo data-id
                 // Aqui você pode fazer uma requisição AJAX para buscar as informações no banco de dados
                 $.ajax({
                     url: 'aluno/inscriao/' + alunoId,
@@ -69,12 +75,27 @@
                             var foto = response.foto ? '/img/upload/aluno/' + response.foto :
                                 'default-foto.jpg';
                             $('.foto-aluno').attr('src', foto);
+
+                            $('#alunoid').val(response.id);
+                            $('#Generos').text(response.genero);
+                            $('#nomeAlunos').text(response.nomealuno);
+                            $('#nomelunos').val(response.nomealuno);
+                            $('#dataNascimentos').text(response.datanascimento);
                         }
                     },
                     error: function() {
 
                     }
                 });
+
+            }
+            // Evento para capturar o clique na âncora
+            $('#matricula').on('click', function() {
+                buscarAluno($(this).data('id'));
+            });
+            // Evento para capturar o clique na âncora
+            $('#confirmar').on('click', function() {
+                buscarAluno($(this).data('id'));
             });
 
 
@@ -90,14 +111,37 @@
                             $.each(data, function(key, turma) {
                                 $('#turma').append('<option value="' + turma.id + '">' + turma
                                     .descricao + '</option>');
+                                $('#turmas').append('<option value="' + turma.id + '">' + turma
+                                    .descricao + '</option>');
                             });
                         } // Fechando o parêntese corretamente
                     });
                 }
             }
 
-            // Ação quando o modal for exibido
+            // Ação quando o modal Matricula for exibido
             $('#Matricula').on('shown.bs.modal', function() {
+                // Função chamada inicialmente quando o modal for exibido
+                var classe = $('#classe').val();
+                var periodo = $('#periodo').val();
+
+                // Chama a função com os valores iniciais
+                carregarTurma(classe, periodo);
+
+                // Evento de mudança no campo "classe"
+                $('#classe').change(function() {
+                    classe = $(this).val(); // Atualiza o valor de "classe"
+                    carregarTurma(classe, periodo); // Chama a função com o novo valor de "classe"
+                });
+
+                // Evento de mudança no campo "periodo"
+                $('#periodo').change(function() {
+                    periodo = $(this).val(); // Atualiza o valor de "periodo"
+                    carregarTurma(classe, periodo); // Chama a função com o novo valor de "periodo"
+                });
+            });
+            // Ação quando o modal Confirmação for exibido
+            $('#Confirmar').on('shown.bs.modal', function() {
                 // Função chamada inicialmente quando o modal for exibido
                 var classe = $('#classe').val();
                 var periodo = $('#periodo').val();
@@ -216,12 +260,7 @@
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script>
         $(document).ready(function() {
-            if ($.fn.dataTable.isDataTable('#tabConfigIni')) {
-                $('.tabela').DataTable().destroy();
-            }
-            $('.tabela').DataTable({
-                "pageLength": 5 // Define o número de registros por página
-            });
+
 
         });
     </script>

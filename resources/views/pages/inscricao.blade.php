@@ -58,9 +58,9 @@
                         <td>{{ $aluno->telf ?? '-' }}</td>
                         <td>{{ $aluno->estado ?? '-' }}</td>
                         <td>
-                            @if ($aluno->id)
+                            @if ($aluno->id && $aluno->estado === 'Pendente')
                                 <a href="#Matricula" class="btn text-primary" title="Matricular aluno"
-                                    data-bs-toggle="modal" data-id="{{ $aluno->id }}">
+                                    data-bs-toggle="modal" id="matricula" data-id="{{ Crypt::encrypt($aluno->id) }}">
                                     <i class="fa fa-user-graduate"></i>
                                 </a>
                                 <a href="#Cadastro" title="Editar dados do aluno" data-bs-toggle="modal"
@@ -70,6 +70,11 @@
                                 <a href="{{ route('funcionario.apagar', $aluno->id) }}" class="btn text-danger"
                                     data-confirm-delete="true" title="Remover aluno">
                                     <i class="fa fa-trash"></i>
+                                </a>
+                            @elseif ($aluno->id && $aluno->estado === 'Matriculado')
+                                <a href="#Confirmar" id="confirmar" class="btn text-primary" title="Confirmar Matricula"
+                                    data-bs-toggle="modal" data-id="{{ Crypt::encrypt($aluno->id) }}">
+                                    <i class="fa fa-clipboard-check"></i>
                                 </a>
                             @else
                                 -
@@ -288,14 +293,6 @@
                                     PDF max 2MB</label>
                                 <input type="file" class="form-control" id="anexo" name="anexo">
                             </div>
-
-                            <div class="col-md-4">
-                                <label for="tipomatricula" class="form-label">Tipo de Matrícula</label>
-                                <select class="form-select" id="tipomatricula" name="tipomatricula" required>
-                                    <option value="Novo">Novo</option>
-                                    <option value="Continuante">Continuante</option>
-                                </select>
-                            </div>
                             <div class="modal-footer ">
                                 <button type="button" class="btn btn-secondary"
                                     data-bs-dismiss="modal">Cancelar</button>
@@ -308,6 +305,99 @@
         </div>
     </div>
 
+
+    <!-- Modal Confirmação -->
+    <div class="modal fade " id="Confirmar" tabindex="-1" role="dialog" aria-labelledby="modalTitleId"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg tela" role="document">
+            <div class="modal-content bg-light">
+                <div class="modal-header ">
+                    <h5 class="modal-title" id="modalTitleId">Confirmação de Matricula</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body ">
+                    <div class="container-fluid">
+                        <div class="aluno-perfil d-flex align-items-center mb-4 p-3 border rounded">
+                            <img src="" alt="Foto do Aluno" class="foto-aluno rounded-circle me-3"
+                                width="100" height="100">
+                            <div>
+                                <h5 class="mb-1 text-start"><strong>Nome:</strong> <span id="nomeAlunos"></span></h5>
+                                <p class="mb-0 text-end"><strong>Classe anterior:</strong> <span id="classe"></span>
+                                </p>
+                                <p class="mb-0 text-start"><strong>Gênero:</strong> <span id="Generos"></span><strong>Ano Anterior:</strong> <span id="ano"></span></p>
+                                <p class="mb-0 text-start"><strong>Data de Nascimento:</strong> <span
+                                        id="dataNascimentos"></span>
+                                <p class="mb-0 text-end"><strong>Resultado:</strong> <span id="resultado"></span></p>
+
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+                        <form action="{{ route('aluno.matricular') }}" method="POST" enctype="multipart/form-data"
+                            class="row g-3">
+                            @csrf
+                            <input type="hidden" name="id" id="id">
+                            <input type="hidden" name="alunoId" id="alunoid">
+                            <input type="hidden" name="nomeAluno" id="nomeluno">
+                            <input type="hidden" name="anoletivo" id="anoletivo">
+                            <div class="col-3">
+                                <label for="classe" class="form-label">Classe</label>
+                                <select id="classe" class="form-control" name="classe" required>
+                                    <option value="7ª">7ª</option>
+                                    <option value="8ª">8ª</option>
+                                    <option value="9ª">9ª</option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <label for="periodo" class="form-label">Período</label>
+                                <select id="periodo" class="form-control" name="periodo" required>
+                                    <option value="Manhã">Manhã</option>
+                                    <option value="Tarde">Tarde</option>
+                                    <option value="Noite">Noite</option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <label for="turmas" class="form-label">Turma</label>
+                                <select class="form-select" id="turmas" name="turma" required>
+                                </select>
+                            </div>
+
+                            <div class="col-3">
+                                <label for="lestrangeira" class="form-label">L.Estrangeira</label>
+                                <select class="form-select" id="lestrangeira" name="lestrangeira" required>
+                                    <option value="Inglês">Inglês</option>
+                                    <option value="Francês">Francês</option>
+                                </select>
+                            </div>
+
+                            <div class="col-6">
+                                <label for="encarregado" class="form-label">Encarregado</label>
+                                <input type="text" class="form-control" id="encarregado" name="encarregado"
+                                    maxlength="120">
+                            </div>
+
+                            <div class="col-6">
+                                <label for="telfencarregado" class="form-label">Telf.Encarregado</label>
+                                <input type="tel" class="form-control" id="telfencarregado" name="telfencarregado"
+                                    maxlength="15">
+                            </div>
+
+                            <div class="col-md-8">
+                                <label for="anexo" class="form-label">Anexar(*certificado,*termos, boletim de nota) em
+                                    PDF max 2MB</label>
+                                <input type="file" class="form-control" id="anexo" name="anexo">
+                            </div>
+                            <div class="modal-footer ">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Matricular</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <script type="text/javascript" async>
@@ -342,14 +432,6 @@
             $('#obs').val("");
             $('#foto').val("");
         }
-
-        $(document).ready(function() {
-            $('#tabInscricao').DataTable({
-                language: {
-                    emptyTable: "Nenhum registro encontrado."
-                }
-            });
-        });
     </script>
     </main>
 @endsection

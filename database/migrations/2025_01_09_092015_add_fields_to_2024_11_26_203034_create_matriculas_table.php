@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('inscricaos', function (Blueprint $table) {
-            $table->enum('estado', ['Pendente', 'Confirmar', 'Matriculado'])->default('Pendente');
+        Schema::table('matriculas', function (Blueprint $table) {
+            $table->enum('resultado', ['Aprovado', 'Reprovado'])->nullable(); // Resultado do ano lectivo atual
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('inscricaos', function (Blueprint $table) {
-            //
+        Schema::table('matriculas', function (Blueprint $table) {
+            $table->enum('resultado', ['Aprovado', 'Reprovado'])->nullable();; // Resultado do ano lectivo atual
         });
     }
 };

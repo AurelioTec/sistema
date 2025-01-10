@@ -1,0 +1,60 @@
+class MatriculaController extends Controller
+{
+    public function confirmarMatricula($inscricao_id)
+    {
+        // Recupera a inscrição do aluno
+        $inscricao = Inscricao::findOrFail($inscricao_id);
+
+        // Verifica o status de aprovação ou reprovação
+        $status = $inscricao->status_ano_anterior; // Supondo que você tenha o campo `status_ano_anterior` na tabela de inscrição
+
+        // Se o aluno foi aprovado
+        if ($status === 'Aprovado') {
+            // Matrícula na próxima turma
+            $turmaProxima = $this->obterProximaTurma($inscricao->turmas_id);
+
+            // Cria a matrícula para o próximo ano letivo
+            Matricula::create([
+                'numatricula' => $this->gerarNumeroMatricula(), // Você pode implementar um gerador único para o número da matrícula
+                'inscricaos_id' => $inscricao->id,
+                'turmas_id' => $turmaProxima->id,
+                'datamatricula' => now(),
+                'tipomatricula' => 'Continuante', // O aluno é continuante
+                'estado' => 'Ativo', // Estado da matrícula
+                'users_id' => auth()->id(), // ID do usuário que registrou
+            ]);
+            return response()->json(['message' => 'Matrícula confirmada na próxima turma.']);
+        }
+
+        // Se o aluno foi reprovado
+        elseif ($status === 'Reprovado') {
+            // Matrícula na mesma turma
+            Matricula::create([
+                'numatricula' => $this->gerarNumeroMatricula(), // Número de matrícula único
+                'inscricaos_id' => $inscricao->id,
+                'turmas_id' => $inscricao->turmas_id, // Mesmo ID da turma
+                'datamatricula' => now(),
+                'tipomatricula' => 'Continuante', // O aluno permanece na mesma turma
+                'estado' => 'Ativo', // Estado da matrícula
+                'users_id' => auth()->id(),
+            ]);
+            return response()->json(['message' => 'Matrícula confirmada na mesma turma.']);
+        } else {
+            return response()->json(['message' => 'Status inválido para matrícula.']);
+        }
+    }
+
+    // Método para determinar a próxima turma (exemplo simples)
+    private function obterProximaTurma($turma_id)
+    {
+        $turma = Turma::findOrFail($turma_id);
+        // Lógica para determinar a próxima turma, por exemplo, incrementar o ano letivo
+        return Turma::where('ano', $turma->ano + 1)->first(); // Supondo que 'ano' seja o ano letivo
+    }
+
+    // Método para gerar número de matrícula (simples exemplo)
+    private function gerarNumeroMatricula()
+    {
+        return 'M' . strtoupper(Str::random(7)); // Gerar um número de matrícula único
+    }
+}

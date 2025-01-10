@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Funcoes;
-use App\Models\ConfigIni;
 use App\Models\Funcionarios;
 use App\Models\Inscricao;
 use App\Models\matricula;
@@ -98,7 +97,7 @@ class MatriculaController extends Controller
         $matricula->lestrangeira = $request->lestrangeira;
         $matricula->encarregado = $request->encarregado;
         $matricula->telfencarregado = $request->telfencarregado;
-        $matricula->tipomatricula = $request->tipomatricula;
+        $matricula->tipomatricula ="Novo";
         $matricula->estado = "Ativo";
         $matricula->numatricula = $nunmatricula;
         $matricula->datamatricula = Carbon::now()->toDateString();

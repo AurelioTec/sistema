@@ -176,3 +176,25 @@ body {
     color: #333;
     margin: 0;
 }
+.card {
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+.icon {
+    font-size: 2.5rem;
+}
+.progress-bar {
+    height: 20px;
+}
+
+/* Home*/
+.card {
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+.icon {
+    font-size: 2.5rem;
+}
+.progress-bar {
+    height: 20px;
+}

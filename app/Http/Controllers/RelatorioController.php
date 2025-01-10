@@ -6,6 +6,7 @@ use App\Models\ConfigIni;
 use App\Models\Funcionarios;
 use App\Models\Matricula;
 use App\Models\Turma;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -73,5 +74,20 @@ class RelatorioController extends Controller
             ->where('periodo', $periodo)
             ->get();
         return response()->json($turmas);
+    }
+
+    public function getUser()
+    {
+        $usuario = Auth::User();
+        //trazer todos os dados do banco de dados
+        if ($usuario->tipo === 'Admin') {
+            // Exibir todos os usuários
+            $user = User::all();
+        } elseif ($usuario->tipo === 'Director') {
+            // Exibir apenas alguns usuários (defina a lógica de seleção)
+            $user = User::all()->slice(1); // Substitua 'condicao_especifica' pela lógica que você precisa
+        }
+
+        return view('relatorios.listausuario', compact('user'));
     }
 }

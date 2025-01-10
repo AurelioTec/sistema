@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ConfigIni;
 use App\Models\Funcionarios;
+use App\Models\Matricula;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -67,10 +68,27 @@ class ConfigIniController extends Controller
     public function encerrar($id)
     {
         $config = ConfigIni::find($id);
-        $config->estado = "Encerrado";
-        $config->save();
-        Alert::success('Sucesso', 'Ano lectivo encerrado!');
-        return redirect()->back();
+        $lastYear = ConfigIni::latest('anoletivo')->first();
+        // Recupere todas as matrículas do ano letivo atual
+        $matriculas = Matricula::whereHas('turma', function ($query) use ($lastYear) {
+            $query->where('anolectivo', $lastYear->anoletivo);
+        })->get();
+        // Verifique se todos os alunos têm o campo de "resultado" preenchido
+        $resultado = $matriculas->filter(function ($matricula) {
+            // Substitua 'resultado' pelo nome real do campo ou relacional relacionado ao resultado
+            return !empty($matricula->resultado);
+        });
+
+        if ($resultado->count() === $matriculas->count()) {
+            // Todos os alunos têm resultado preenchido
+            $config->estado = "Encerrado";
+            $config->save();
+            Alert::success('Sucesso', 'Ano lectivo encerrado!');
+            return redirect()->back();
+        } else {
+            Alert::warning('Atenção', 'Alunos com reultado em falta');
+            return redirect()->back();
+        }
     }
 
     //função para deletar

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ConfigIni;
 use App\Models\Funcionarios;
 use App\Models\Inscricao;
 use App\Models\Municipios;
@@ -10,33 +11,19 @@ use App\Models\Turma;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class InscricaoController extends Controller
 {
     public function index()
     {
-        $alunos = Inscricao::with('municipios')
-        ->where('estado', 'Pendente')
-        ->get();
+        $alunos = Inscricao::with('municipios')->get();
+        // Obter o último ano letivo
+        $lastYear = ConfigIni::latest('anoletivo')->first();
 
-        if ($alunos->isEmpty()) {
-            $alunos = collect([
-                [
-                    'foto' => '-', // Defina valores padrão
-                    'nomealuno' => '-',
-                    'genero' => '-',
-                    'datanascimento' => null,
-                    'bairro' => '-',
-                    'telf' => '-',
-                    'estado' => '-',
-                    'id' => null,
-                ]
-            ])->map(function ($item) {
-                return (object) $item; // Converta cada item para um objeto
-            });
-        }
         $inscricao = Inscricao::with('municipios')->get();
+
         $userId = Auth::id();
         $turmaPorAno = Turma::where('anolectivo', date('Y'))->get();
         $funcionario = Funcionarios::where('Users_id', $userId)->first(); // Acessa o funcionário relacionado
@@ -58,7 +45,8 @@ class InscricaoController extends Controller
     }
     public function getAlunoById($id)
     {
-        $inscricao = Inscricao::where('id', $id)->first();
+
+        $inscricao = Inscricao::where('id', Crypt::decrypt($id))->first();
         $inscricao->datanascimento = Carbon::parse($inscricao->datanascimento)->format('d/m/y');
         return response()->json($inscricao);
     }

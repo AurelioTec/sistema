@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('telfencarregado', 15)->nullable(); // Telefone do encarregado
             $table->string('anexo')->nullable(); // Caminho do arquivo de anexo
             $table->foreignId('users_id')->constrained()->onDelete('cascade'); // ID do usuário que registrou (chave estrangeira)
-            $table->enum('tipomatricula', ['Novo', 'Continuante']); // Tipo de matrícula
+            $table->enum('tipomatricula', ['Novo', 'Repetente'])->default('Novo'); // Tipo de matrícula
             $table->enum('estado', ['Ativo', 'Inativo', 'Transferido'])->default('Ativo'); // Estado da matrícula
             $table->timestamps();
             $table->foreignId('inscricaos_id')->constrained()->onDelete('cascade'); // A chave estrangeira para 'inscricoes'

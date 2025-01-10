@@ -6,50 +6,50 @@
     <div class="container bg-light">
         <div class="container px-4 py-5" id="featured-3">
             <h2 class="pb-2 border-bottom">Relatorio</h2>
-            <div class="row g-4 py-5 row-cols-1 row-cols-lg-3 text-center">
-                <div class="feature col ">
-                    <div
-                        class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
-                        <i class="fa-solid fa-people-roof fa-3x bg-dark border-1"></i>
+            <div class="row">
+                <div class="admin-dashboard">
+                    <div class="icon">
+                        <a href="#getTurma" data-bs-toggle="modal" data-bs-target="#getTurma" class="icon-link"><i
+                                class="fas fa-user-friends"></i></a>
+                        <p>Alunos por turmas</p>
                     </div>
-                    <h3 class="fs-2 text-body-emphasis">Aluno por turma</h3>
-                    <p>Distribuição do número de alunos matriculados em uma turma.</p>
-                    <a href="#getTurma" data-bs-toggle="modal" data-bs-target="#getTurma" class="icon-link">Abrir
-                    </a>
+                    <div class="icon">
+                        <a href="{{ route('relatorio.usuario') }}" class="icon-link">
+                            <i class="fas fa-user-friends"></i></a>
+
+                        <p>Usuários</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-cogs"></i>
+                        <p>Configurações</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-chart-line"></i>
+                        <p>Estatísticas</p>
+                    </div>
                 </div>
-                <div class="feature col">
-                    <div
-                        class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
-                        <i class="fa-regular fa-address-book fa-3x bg-dark border-1"></i>
+                <div class="admin-dashboard">
+                    <div class="icon">
+                        <i class="fa fa-home-user"></i>
+                        <p>Turmas</p>
                     </div>
-                    <h3 class="fs-2 text-body-emphasis">Alunos Matriculados</h3>
-                    <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence
-                        and probably just keep going until we run out of words.</p>
-                    <a href="#" class="icon-link">
-                        Call to action
-                        <svg class="bi">
-                            <use xlink:href="#chevron-right" />
-                        </svg>
-                    </a>
-                </div>
-                <div class="feature col">
-                    <div
-                        class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
-                        <i class="fa-regular fa-address-card  fa-3x bg-dark border-1 "></i>
+                    <div class="icon">
+                        <i class="fas fa-pencil"></i>
+                        <p>Inscrições</p>
                     </div>
-                    <h3 class="fs-2 text-body-emphasis">Ficha de matricula</h3>
-                    <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence
-                        and probably just keep going until we run out of words.</p>
-                    <a href="#" class="icon-link">
-                        Call to action
-                        <svg class="bi">
-                            <use xlink:href="#chevron-right" />
-                        </svg>
-                    </a>
+                    <div class="icon">
+                        <i class="fas fa-user-check"></i>
+                        <p>Matriculas</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-file-edit"></i>
+                        <p>Relatórios</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 
 
     <!-- Modal Pesquisar aluno turma -->
