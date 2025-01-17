@@ -27,7 +27,7 @@ class UserController extends Controller
         $userId = Auth::id();
         $funcionario = Funcionarios::where('Users_id', $userId)->first(); // Acessa o funcionário relacionado
         $title = 'Atenção!';
-        $text = "Dejesas apagar o usuario?";
+        $text = "Tem certeza que dejesas excluir o Utilizador!?";
         confirmDelete($title, $text);
         return view('pages.usuario', compact('user', 'funcionario'));
     }
@@ -48,14 +48,14 @@ class UserController extends Controller
         $user->save();
         if ($user) {
             if (isset($request->id)) {
-                Alert::success('Sucesso', 'Usuario atualizado');
+                Alert::success('Sucesso', 'Utilizador atualizado');
                 return redirect()->back();
             } else {
-                Alert::success('Sucesso', 'Usuario adicionado com sucesso');
+                Alert::success('Sucesso', 'Utilizador adicionado com sucesso');
                 return redirect()->back();
             }
         } else {
-            Alert::error('Erro', 'Erro ao cadastrar o Usuario');
+            Alert::error('Erro', 'Erro ao adicionar o utilizador');
             return redirect()->back();
         }
     }
@@ -63,8 +63,8 @@ class UserController extends Controller
     //função para deletar
     public function deletar($id)
     {
-        User::find($id)->delete();
-        Alert::success('Sucesso', 'Usuario apagado com sucesso');
+        User::find(Crypt::decrypt($id))->delete();
+        Alert::success('Sucesso', 'Utilizador excluido com sucesso');
         return redirect()->back();
     }
 
@@ -90,7 +90,7 @@ class UserController extends Controller
             return redirect()->back();
         } else {
             // Caso o usuário não seja encontrado
-            Alert::error('Erro', 'Usuário não encontrado');
+            Alert::error('Erro', 'Utilizador não encontrado');
             return redirect()->back();
         }
     }
