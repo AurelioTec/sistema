@@ -43,9 +43,7 @@
                                     class="btn text-success" title="Editar configurações">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                            @endif
-                            @if ($conf->estado == 'Aberto')
-                                <a href="{{ route('config.encerrar', $conf->id) }}" class="btn text-danger"
+                                <a href="{{ route('config.encerrar', Crypt::encrypt($conf->id)) }}" class="btn text-danger"
                                     data-confirm-delete="true" title="Encerrar ano lectivo">
                                     <i class="fa fa-sign-out"></i>
                                 </a>
@@ -73,22 +71,22 @@
                             <!-- Primeira linha -->
                             <input type="hidden" name="id" id="id">
                             <div class="col-5">
-                                <label for="inputEscola">Nome da escola</label>
-                                <input type="text" class="form-control" name="escola" id="inputEscola" required>
+                                <label for="escola">Nome da escola</label>
+                                <input type="text" class="form-control" name="escola" id="escola" required>
                             </div>
                             <div class="col-2">
-                                <label for="inputSalas">Total de salas</label>
-                                <input type="number" min="5" name="salas" class="form-control" id="inputSalas"
+                                <label for="salas">Total de salas</label>
+                                <input type="number" min="5" name="salas" class="form-control" id="salas"
                                     required>
                             </div>
                             <div class="col-2">
-                                <label for="inputAnoLetivo">Ano Letivo</label>
+                                <label for="anoLetivo">Ano Letivo</label>
                                 <input type="number" class="form-control" name="anoletivo" min="{{ now()->year }}"
-                                    max="2100" id="inputAnoLetivo" required>
+                                    max="2100" id="anoLetivo" required>
                             </div>
                             <div class="col-3">
-                                <label for="inputTipo">Tipo</label>
-                                <select class="form-select" name="tipo" id="inputTipo" required>
+                                <label for="tipo">Tipo</label>
+                                <select class="form-select" name="tipo" id="tipo" required>
                                     <option selected>Escolher Tipo...</option>
                                     <option value="Colegio">Colégio</option>
                                     <option value="Complexo">Complexo</option>
@@ -97,16 +95,16 @@
                             </div>
                             <!-- Segunda linha -->
                             <div class="col-4">
-                                <label for="inputDirector">Nome do director</label>
-                                <input type="text" name="diretor" class="form-control" id="inputDirector" required>
+                                <label for="director">Nome do director</label>
+                                <input type="text" name="diretor" class="form-control" id="diretor" required>
                             </div>
                             <div class="col-4">
-                                <label for="inputPedagogico">Nome do pedagógico</label>
-                                <input type="text" name="pedagogico" class="form-control" id="inputPedagogico" required>
+                                <label for="pedagogico">Nome do pedagógico</label>
+                                <input type="text" name="pedagogico" class="form-control" id="pedagogico" required>
                             </div>
                             <div class="col-4">
-                                <label for="inputAdministrativo">Nome do administrativo</label>
-                                <input type="text" name="administrativo" class="form-control" id="inputAdministrativo"
+                                <label for="administrativo">Nome do administrativo</label>
+                                <input type="text" name="administrativo" class="form-control" id="administrativo"
                                     required>
                             </div>
 
@@ -126,16 +124,24 @@
     <script>
         function editar(valor) {
             $('#id').val(valor.id);
-            $('#name').val(valor.name);
-            $('#email').val(valor.email);
+            $('#escola').val(valor.escola);
+            $('#salas').val(valor.salas);
+            $('#anoLetivo').val(valor.anoletivo);
             $('#tipo').val(valor.tipo);
+            $('#diretor').val(valor.director);
+            $('#pedagogico').val(valor.pedagogico);
+            $('#administrativo').val(valor.administrativo);
         }
 
         function limpar() {
             $('#id').val("");
-            $('#name').val("");
-            $('#email').val("");
+            $('#escola').val("");
+            $('#salas').val("");
+            $('#anoLetivo').val("");
             $('#tipo').val("");
+            $('#diretor').val("");
+            $('#pedagogico').val("");
+            $('#administrativo').val("");
         }
     </script>
 @endsection

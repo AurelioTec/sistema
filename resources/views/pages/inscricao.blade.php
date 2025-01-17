@@ -321,15 +321,14 @@
                             <img src="" alt="Foto do Aluno" class="foto-aluno rounded-circle me-3"
                                 width="100" height="100">
                             <div>
-                                <h5 class="mb-1 text-start"><strong>Nome:</strong> <span id="nomeAlunos"></span></h5>
-                                <p class="mb-0 text-end"><strong>Classe anterior:</strong> <span id="classe"></span>
+                                <h5 class="mb-1"><strong>Nome:</strong> <span id="nomeAlunos"></span></h5>
+                                <p class="mb-0 "><strong>Gênero:</strong> <span id="Generos"></span>
                                 </p>
-                                <p class="mb-0 text-start"><strong>Gênero:</strong> <span id="Generos"></span><strong>Ano Anterior:</strong> <span id="ano"></span></p>
-                                <p class="mb-0 text-start"><strong>Data de Nascimento:</strong> <span
-                                        id="dataNascimentos"></span>
-                                <p class="mb-0 text-end"><strong>Resultado:</strong> <span id="resultado"></span></p>
-
+                                <p class="mb-0"><strong>Data de Nascimento:</strong> <span id="dataNascimentos"></span>
                                 </p>
+                                <p class="mb-0"><strong>Ano Anterior:</strong> <span id="ano"></span></p>
+                                <p class="mb-0 "><strong>Classe anterior:</strong> <span id="classe"></span></p>
+                                <p class="mb-0 "><strong>Resultado:</strong> <span id="resultado"></span></p>
                             </div>
                         </div>
                         <hr>

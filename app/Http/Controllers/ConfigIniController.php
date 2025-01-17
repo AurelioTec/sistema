@@ -7,6 +7,7 @@ use App\Models\Funcionarios;
 use App\Models\Matricula;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ConfigIniController extends Controller
@@ -29,7 +30,7 @@ class ConfigIniController extends Controller
         $config = null;
         if (isset($request->id)) {
             //procurar um elemento no banco de dados usar o find
-            $config = ConfigIni::find($request->id);
+            $config = ConfigIni::find($request->id)->last();
         } else {
             $config = new ConfigIni();
         }
@@ -41,12 +42,9 @@ class ConfigIniController extends Controller
         $config->pedagogico = $request->pedagogico;
         $config->administrativo = $request->administrativo;
         $config->estado = "Aberto";
-        $result = ConfigIni::where([
-            ['anoletivo', $request->anoletivo],
-            ['estado', 'Aberto']
-        ])->exists();
+        $result = ConfigIni::where('estado', 'Aberto')->exists();
         if ($result) {
-            Alert::warning('Atenção', 'Ano lectivo ja está aberto');
+            Alert::warning('Atenção', 'Encerrar ano lectivo aberto');
             return redirect()->back();
         } else {
             $config->save();
@@ -67,7 +65,7 @@ class ConfigIniController extends Controller
 
     public function encerrar($id)
     {
-        $config = ConfigIni::find($id);
+        $config = ConfigIni::find(Crypt::decrypt($id));
         $lastYear = ConfigIni::latest('anoletivo')->first();
         // Recupere todas as matrículas do ano letivo atual
         $matriculas = Matricula::whereHas('turma', function ($query) use ($lastYear) {

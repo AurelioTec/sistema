@@ -93,7 +93,7 @@ Route::group(['middleware' => "auth"], function () {
     //Rotas turma
     Route::get('turma', [TurmaController::class, 'index'])->name('turma');
     Route::post('turma', [TurmaController::class, 'store'])->name('turma.cadastrar');
-    //Route::delete('delete/{id}', [FuncionariosController::class, 'deletar'])->name('funcionario.apagar');
+    Route::delete('excluir/{id}', [TurmaController::class, 'deletar'])->name('turma.excluir');
     //Rotas matricula
     Route::get('matricula', [MatriculaController::class, 'index'])->name('matricula');
     Route::post('aluno/matricular', [MatriculaController::class, 'store'])->name('aluno.matricular');

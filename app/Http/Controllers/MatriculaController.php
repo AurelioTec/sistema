@@ -84,8 +84,8 @@ class MatriculaController extends Controller
 
             $doc = $request->file('anexo');
             $extensao = $doc->extension();
-            $docNome = md5($doc->getClientOriginalName() . strtotime('now')) . '.' . $extensao;
-            $caminho = Storage::makeDirectory(public_path('docs/upload/aluno/' . $inicialNome . '/'));
+            $docNome = $request->nomeAluno . '.' . $extensao;
+            $caminho = Storage::makeDirectory(public_path('/docs/upload/aluno/' . $inicialNome . '/'));
 
             // O método putFileAs irá criar automaticamente a pasta caso ela não exista
             Storage::disk('public')->putFileAs($caminho, $doc, $docNome);
@@ -97,7 +97,7 @@ class MatriculaController extends Controller
         $matricula->lestrangeira = $request->lestrangeira;
         $matricula->encarregado = $request->encarregado;
         $matricula->telfencarregado = $request->telfencarregado;
-        $matricula->tipomatricula ="Novo";
+        $matricula->tipomatricula = "Novo";
         $matricula->estado = "Ativo";
         $matricula->numatricula = $nunmatricula;
         $matricula->datamatricula = Carbon::now()->toDateString();

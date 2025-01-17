@@ -18,7 +18,9 @@ class InscricaoController extends Controller
 {
     public function index()
     {
-        $alunos = Inscricao::with('municipios')->get();
+        $alunos = Inscricao::with('municipios')
+        -> where('estado', 'Pendente')
+        ->get();
         // Obter o último ano letivo
         $lastYear = ConfigIni::latest('anoletivo')->first();
 

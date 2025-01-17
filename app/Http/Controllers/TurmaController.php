@@ -7,6 +7,7 @@ use App\Models\Funcionarios;
 use App\Models\Turma;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class TurmaController extends Controller
@@ -18,10 +19,14 @@ class TurmaController extends Controller
     {
         $turmas = Turma::all();
 
-        $config = ConfigIni::where('anoletivo', date('Y'))
-            ->selectRaw('anoletivo, salas')
+        $config = ConfigIni::where('estado', 'aberto')
+            ->selectRaw('estado, anoletivo, salas')
             ->get();
         $userId = Auth::id();
+        $title = 'Atenção!';
+        $text = "Tens a certesa que desejas excluir a turma!?";
+
+        confirmDelete($title, $text);
         $funcionario = Funcionarios::where('Users_id', $userId)->first();
         return view('pages.turma', compact('turmas', 'config', 'funcionario'));
     }
@@ -53,7 +58,7 @@ class TurmaController extends Controller
                 return redirect()->back();
             }
         } else {
-            Alert::error('Error', 'Erro ao cadastrar o funcionario');
+            Alert::error('Error', 'Erro ao cadastrar a turma');
             return redirect()->back();
         }
     }
@@ -82,11 +87,12 @@ class TurmaController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Turma $turmas)
+    //função para deletar
+    public function deletar($id)
     {
-        //
+
+        Turma::find(Crypt::decrypt($id))->delete();
+        Alert::success('Sucesso', 'Turma excluida!');
+        return redirect()->back();
     }
 }

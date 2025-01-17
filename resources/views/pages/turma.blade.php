@@ -7,7 +7,7 @@
         <div class="card-header d-flex justify-content-between align-items-center pt-5">
             <h4 class="mb-0">Lista de turmas</h4>
             <a href="#Cadastro" onclick="limpar()" data-bs-toggle="modal" data-bs-target="#Cadastro"
-                style="font-size: 28pt; color: #3498db" title="Cadstrar turma">
+                style="font-size: 28pt; color: #3498db" title="Adicionar turma">
                 <i class="fa fa-circle-plus"></i>
             </a>
         </div>
@@ -43,7 +43,7 @@
                                 class="btn text-success">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <a href="{{ route('funcionario.apagar', $turma->id) }}" class="btn text-danger"
+                            <a href="{{ route('turma.excluir', Crypt::encrypt($turma->id)) }}" class="btn text-danger"
                                 data-confirm-delete="true">
                                 <i class="fa fa-trash"></i>
                             </a>
@@ -118,8 +118,8 @@
                                 </select>
                             </div>
                             <div class="modal-footer ">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                <button type="submit" id="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </form>
                     </div>
@@ -130,26 +130,23 @@
     <script>
         function editar(valor) {
             $('#id').val(valor.id);
-            $('#nome').val(valor.nome);
-            $('#nagente').val(valor.nagente);
-            $('#datanascimento').val(valor.datanascimento);
-            $('#categoria').val(valor.categoria);
-            $('#genero').val(valor.genero);
-            $('#habilitacao').val(valor.habilitacao);
-            $('#telf').val(valor.telf);
-            $('#funcao').val(valor.funcao);
-            $('#email').val(valor.user.email);
+            $('#classe').val(valor.classe);
+            $('#codigo').val(valor.codigo);
+            $('#descricao').val(valor.descricao);
+            $('#periodo').val(valor.periodo);
+            $('#sala').val(valor.sala);
+            $('#anolectivo').val(valor.anolectivo);
+            $('#submit').text('Salvar');
         }
 
         function limpar() {
-            $('#nome').val("");
-            $('#nagente').val("");
-            $('#datanascimento').val("");
-            $('#categoria').val("");
-            $('#genero').val("");
-            $('#habilitacao').val("");
-            $('#telf').val("");
-            $('#funcao').val("");
+            $('#id').val("");
+            $('#classe').val("");
+            $('#codigo').val("");
+            $('#descricao').val("");
+            $('#periodo').val("");
+            $('#sala').val("");
+            $('#anolectivo').val("");
         }
     </script>
     </main>
