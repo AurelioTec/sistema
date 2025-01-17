@@ -5,9 +5,9 @@
 @section('conteudo')
     <div class="container bg-light">
         <div class="card-header d-flex justify-content-between align-items-center pt-5">
-            <h4 class="mb-0">Lista de Usuários</h4>
+            <h4 class="mb-0">Lista de utilizadores</h4>
             <a href="#Cadastro" onclick="limpar()" data-bs-toggle="modal" data-bs-target="#Cadastro"
-                style="font-size: 28pt; color: #3498db">
+                style="font-size: 28pt; color: #3498db" title=" Adicionar Utilizador">
                 <i class="fa fa-circle-plus"></i>
             </a>
         </div>
@@ -37,7 +37,7 @@
                                 class="btn text-success">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <a href="{{ route('usuario.apagar', $use->id) }}" class="btn text-danger"
+                            <a href="{{ route('utilizador.excluir', Crypt::encrypt($use->id)) }}" class="btn text-danger"
                                 data-confirm-delete="true">
                                 <i class="fa fa-trash"></i>
                             </a>
@@ -53,12 +53,12 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitleId">Cadastrar Usuário</h5>
+                    <h5 class="modal-title" id="modalTitleId">Cadastrar utilizador</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        <form action="{{ route('usuario.cadastrar') }}" method="POST">
+                        <form action="{{ route('utilizador.cadastrar') }}" method="POST">
                             @csrf
                             <input type="hidden" name="id" id="id">
                             <div class="form-group">
@@ -79,8 +79,8 @@
                                 </select>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                <button type="submit" id="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </form>
                     </div>
@@ -95,6 +95,9 @@
             $('#name').val(valor.name);
             $('#email').val(valor.email);
             $('#tipo').val(valor.tipo);
+            $('#submit').text("Salvar");
+            $('#modalTitleId').text("Editar utilizador");
+
         }
 
         function limpar() {

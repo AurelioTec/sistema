@@ -59,7 +59,7 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content bg-light">
                 <div class="modal-header ">
-                    <h5 class="modal-title" id="modalTitleId">Configurar Turma</h5>
+                    <h5 class="modal-title" id="modalTitleId">Cadastrar Turma</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body ">
@@ -137,6 +137,7 @@
             $('#sala').val(valor.sala);
             $('#anolectivo').val(valor.anolectivo);
             $('#submit').text('Salvar');
+            $('#modalTitleId').text("Editar turma");
         }
 
         function limpar() {

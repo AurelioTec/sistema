@@ -73,12 +73,12 @@ Route::group(['middleware' => "auth"], function () {
     Route::post('configini', [ConfigIniController::class, 'store'])->name('config.guardar');
     Route::delete('configini/encerrar/{id}', [ConfigIniController::class, 'encerrar'])->name('config.encerrar');
     //Rotas Usuarios
-    Route::get('usuario', [UserController::class, 'index'])->name('usuario');
-    Route::post('usuario/cadastrar', [UserController::class, 'store'])->name('usuario.cadastrar');
-    Route::post('usuario/updatepass', [UserController::class, 'updatePassword'])->name('usuario.update');
-    Route::post('usuario/updatefoto', [FuncionariosController::class, 'updateProfilePicture'])->name('usuario.updatefoto');
-    Route::get('usuario/perfil', [UserController::class, 'show'])->name('usuario.perfil');
-    Route::delete('usuario/apagar/{id}', [UserController::class, 'deletar'])->name('usuario.apagar');
+    Route::get('utilizador', [UserController::class, 'index'])->name('utilizador');
+    Route::post('utilizador/cadastrar', [UserController::class, 'store'])->name('utilizador.cadastrar');
+    Route::post('utilizador/updatepass', [UserController::class, 'updatePassword'])->name('utilizador.update');
+    Route::post('Utilizador/updatefoto', [FuncionariosController::class, 'updateProfilePicture'])->name('utilizador.updatefoto');
+    Route::get('Utlizador/perfil', [UserController::class, 'show'])->name('utilizador.perfil');
+    Route::delete('Utilizador/excluir/{id}', [UserController::class, 'deletar'])->name('utilizador.excluir');
     //Rotas Funcionarios
     Route::get('funcionario', [FuncionariosController::class, 'index'])->name('funcionario');
     Route::post('funcionario', [FuncionariosController::class, 'store'])->name('funcionario.cadastrar');

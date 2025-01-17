@@ -110,7 +110,8 @@
 
                             <!-- Linha do botão -->
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary " style="background: #3498db">Guardar</button>
+                                <button type="submit" id="submit" class="btn btn-primary "
+                                    style="background: #3498db">Guardar</button>
                                 <button type="button" class="btn btn-secondary"
                                     data-bs-dismiss="modal">Cancelar</button>
                             </div>
@@ -131,6 +132,8 @@
             $('#diretor').val(valor.director);
             $('#pedagogico').val(valor.pedagogico);
             $('#administrativo').val(valor.administrativo);
+            $('#submit').text('Salvar');
+            $('#modalTitleId').text("Editar ano lectivo");
         }
 
         function limpar() {

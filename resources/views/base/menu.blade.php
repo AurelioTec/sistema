@@ -6,8 +6,8 @@
          <a class="nav-link" href="{{ route('turma') }}"><i class="fa fa-home-user"></i>Turmas</a>
      </li>
      <li class="nav-item">
-         <a class="nav-link" href="{{ route('usuario') }}"><i class="fa fa-user-friends"></i>
-             Usuários</a>
+         <a class="nav-link" href="{{ route('utilizador') }}"><i class="fa fa-user-friends"></i>
+             Utilizadores</a>
      </li>
      <li class="nav-item">
          <a class="nav-link" href="{{ route('inscricao') }}"><i class="fa fa-pencil"></i> Inscrições</a>
@@ -28,8 +28,8 @@
          <a class="nav-link" href="{{ route('config') }}"><i class="fa fa-cog"></i> Configurações</a>
      </li>
      <li class="nav-item">
-         <a class="nav-link" href="{{ route('usuario') }}"><i class="fa fa-user-friends"></i>
-             Usuários</a>
+         <a class="nav-link" href="{{ route('utilizador') }}"><i class="fa fa-user-friends"></i>
+             Utilizadores</a>
      </li>
      <li class="nav-item">
          <a class="nav-link" href="{{ route('inscricao') }}"><i class="fa fa-pencil"></i> Inscrições</a>

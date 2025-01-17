@@ -1,6 +1,6 @@
 @extends('base.app')
 @section('titulo')
-    -Home
+    -Perfil
 @endsection
 @section('conteudo')
     <div class="container bg-light">
@@ -73,7 +73,7 @@
                 </div>
                 <div class="modal-body ">
                     <div class="container-fluid">
-                        <form action="{{ route('usuario.update') }}" class="row g-3" method="POST">
+                        <form action="{{ route('utilizador.update') }}" class="row g-3" method="POST">
                             @csrf
                             <input type="hidden" name="id" id="id" value="{{ $user->id }}">
 
@@ -88,8 +88,8 @@
                                     required>
                             </div>
                             <div class="modal-footer ">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                                 <button type="submit" class="btn btn-primary">Salvar</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </form>
                     </div>
@@ -109,7 +109,8 @@
                 </div>
                 <div class="modal-body ">
                     <div class="container-fluid">
-                        <form action="{{ route('usuario.updatefoto') }}" method="POST" enctype="multipart/form-data"class="row g-3">
+                        <form action="{{ route('utilizador.updatefoto') }}" method="POST"
+                            enctype="multipart/form-data"class="row g-3">
                             @csrf
                             <input type="hidden" name="id" id="id" value="{{ $user->id }}">
 
@@ -118,8 +119,9 @@
                                 <input type="file" name="foto" class="form-control" id="foto" required>
                             </div>
                             <div class="modal-footer ">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                                 <button type="submit" class="btn btn-primary">Salvar</button>
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </form>
                     </div>
