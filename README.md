@@ -124,8 +124,8 @@ Contribuições são bem-vindas! Siga os passos abaixo para colaborar:
 
 ## Contato
 
-📧 Email: [seuemail@example.com](mailto:aureliofabio16@gmail.com)  
-🌐 Website: [seusite.com](https://www.linkedin.com/in/afonso-aur%C3%A9lio-269aa6227/)  
+📧 Email: [aureliofabio16@gmail.com](mailto:aureliofabio16@gmail.com)  
+🌐 Website: [https://www.linkedin.com/in/afonso-aur%C3%A9lio-269aa6227/](https://www.linkedin.com/in/afonso-aur%C3%A9lio-269aa6227/)  
 📞 Telefone: +244 939 985 248
 📞 Telefone: +244 958 792 104
 
