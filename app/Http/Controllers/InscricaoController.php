@@ -19,13 +19,16 @@ class InscricaoController extends Controller
     public function index()
     {
         $alunos = Inscricao::with('municipios')
-        -> where('estado', 'Pendente')
-        ->get();
+            ->where('estado', 'Pendente')
+            ->get();
         // Obter o último ano letivo
         $lastYear = ConfigIni::latest('anoletivo')->first();
 
         $inscricao = Inscricao::with('municipios')->get();
 
+        $title = 'Atenção!';
+        $text = "Tens a certesa que desejas excluir o aluno!?";
+        confirmDelete($title, $text);
         $userId = Auth::id();
         $turmaPorAno = Turma::where('anolectivo', date('Y'))->get();
         $funcionario = Funcionarios::where('Users_id', $userId)->first(); // Acessa o funcionário relacionado
@@ -100,5 +103,13 @@ class InscricaoController extends Controller
             Alert::error('Error', 'Erro ao inscrever o aluno');
             return redirect()->back();
         }
+    }
+
+    public function deletar($id)
+    {
+        $decryptedId = Crypt::decrypt($id);
+        Inscricao::find($decryptedId)->delete();
+        Alert::success('Sucesso', 'Aluno excluida!');
+        return redirect()->back();
     }
 }

@@ -89,7 +89,7 @@ Route::group(['middleware' => "auth"], function () {
     Route::get('aluno/inscriao/{id}', [InscricaoController::class, 'getAlunoById'])->name('alunoId');
     Route::get('aluno', [InscricaoController::class, 'index'])->name('inscricao');
     Route::post('aluno', [InscricaoController::class, 'store'])->name('aluno.cadastrar');
-    // Route::delete('delete/{id}', [FuncionariosController::class, 'deletar'])->name('funcionario.apagar');
+    Route::get('aluno/excluir/{id}', [InscricaoController::class, 'deletar'])->name('aluno.excluir');
     //Rotas turma
     Route::get('turma', [TurmaController::class, 'index'])->name('turma');
     Route::post('turma', [TurmaController::class, 'store'])->name('turma.cadastrar');
