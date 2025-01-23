@@ -1,6 +1,6 @@
 # Sistema de Gestão de Matrículas - Complexo Escolar BG 1237
 
-<img src="https://drive.google.com/file/d/1KkqMsGeDgezzT10ZJ0AlmnwR_Y0MzgzA/view?usp=drive_link" alt="Banner Sistema de Gestão de Matrículas">
+<img src="" alt="Banner Sistema de Gestão de Matrículas">
 
 Bem-vindo ao repositório do **Sistema de Gestão de Matrículas** do **Complexo Escolar BG 1237**. Este sistema foi desenvolvido para otimizar o gerenciamento de matrículas, organização de turmas e registro acadêmico, utilizando a potência do Laravel 11.
 
@@ -32,7 +32,7 @@ Bem-vindo ao repositório do **Sistema de Gestão de Matrículas** do **Complexo
 
 ### ✅ Relatórios Detalhados
 
--   Geração de relatórios dinâmicos por aluno, turma ou período.
+-   Geração de relatórios html dinâmicos por aluno, turma ou período.
 -   Exportação de dados em formatos PDF.
 
 ### ✅ Segurança e Eficiência
