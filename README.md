@@ -1,7 +1,5 @@
 # Sistema de Gestão de Matrículas - Complexo Escolar BG 1237
 
-<img src="https://github.com/AurelioTec/sistema/blob/main/public/img/blade/login.jpeg?raw=true" alt="Banner Sistema de Gestão de Matrículas">
-
 Bem-vindo ao repositório do **Sistema de Gestão de Matrículas** do **Complexo Escolar BG 1237**. Este sistema foi desenvolvido para otimizar o gerenciamento de matrículas, organização de turmas e registro acadêmico, utilizando a potência do Laravel 11.
 
 > **Status do projeto:** 🚀🔧 Em desenvolvimento
@@ -102,7 +100,7 @@ Acesse o sistema em: `http://localhost:8000`
 
 ### Tela de Login
 
-![Tela de Login](https://drive.google.com/file/d/16pnXGUlFR9akvFzcP8GYjTWDVVXoUfKr/view?usp=drive_link)
+![Tela de Login](<img src="https://github.com/AurelioTec/sistema/blob/main/public/img/blade/login.jpeg?raw=true">)
 
 ### Painel de Controle
 
