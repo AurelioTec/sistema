@@ -10,7 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
-use PhpParser\Builder\Function_;
+use RealRashid\SweetAlert\Facades\Alert;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -23,10 +23,10 @@ class RelatorioController extends Controller
         $ultimoAno = ConfigIni::orderBy('anoletivo', 'desc') // Ordena por anoletivo decrescente
             ->selectRaw('anoletivo')                // Seleciona os campos necessários
             ->first();                                     // Pega o primeiro registro
+
         $config = ConfigIni::where('anoletivo', $ultimoAno->anoletivo)
             ->selectRaw('anoletivo, salas')
             ->get();
-
         $funcionario = Funcionarios::where('Users_id', $userId)->first(); // Acessa o funcionário relacionado
         return view('pages.relatorio', compact('funcionario', 'turmas', 'config'));
     }
@@ -48,6 +48,7 @@ class RelatorioController extends Controller
                     ->where('periodo', $request->periodo);
             })
             ->get();
+
         return view('relatorios.alunoturma', compact('alunos', 'request', 'header'));
     }
 
@@ -83,11 +84,22 @@ class RelatorioController extends Controller
         if ($usuario->tipo === 'Admin') {
             // Exibir todos os usuários
             $user = User::all();
-        } elseif ($usuario->tipo === 'Director') {
+        } elseif ($usuario->tipo === 'Diretor') {
             // Exibir apenas alguns usuários (defina a lógica de seleção)
             $user = User::all()->slice(1); // Substitua 'condicao_especifica' pela lógica que você precisa
         }
 
         return view('relatorios.listausuario', compact('user'));
+    }
+
+    public function getMatricula()
+    {
+        $matriculados = Matricula::with('inscricao', 'turma', 'usuario')->get();
+        return view('relatorios.listalunomatri', compact('matriculados'));
+    }
+    public function getWarningAlert()
+    {
+        Alert::warning('Atenção', 'Você não tem permissão para emitir este relatorio.');
+        return redirect()->back();
     }
 }

@@ -42,7 +42,7 @@
                                 class="btn text-success">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <a href="{{ route('funcionario.excluir', Crypt::encrypt($func->id); ) }}" class="btn text-danger"
+                            <a href="{{ route('funcionario.excluir', Crypt::encrypt($func->id)) }}" class="btn text-danger"
                                 data-confirm-delete="true">
                                 <i class="fa fa-trash"></i>
                             </a>

@@ -1,11 +1,11 @@
 @extends('base.app')
 @section('titulo')
-    -Home
+    -Relatorios
 @endsection
 @section('conteudo')
     <div class="container bg-light">
         <div class="container px-4 py-5" id="featured-3">
-            <h2 class="pb-2 border-bottom">Relatorio</h2>
+            <h2 class="pb-2 border-bottom">Relatorios</h2>
             <div class="row">
                 <div class="admin-dashboard">
                     <div class="icon">
@@ -14,14 +14,15 @@
                         <p>Alunos por turmas</p>
                     </div>
                     <div class="icon">
-                        <a href="{{ route('relatorio.usuario') }}" class="icon-link">
-                            <i class="fas fa-user-friends"></i></a>
-
-                        <p>Usuários</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-cogs"></i>
-                        <p>Configurações</p>
+                        @if (Auth::check() && (Auth::user()->tipo === 'Admin' || Auth::user()->tipo === 'Diretor'))
+                            <a href="{{ route('relatorio.usuario') }}" class="icon-link" target="_blank"
+                                rel="noopener noreferrer">
+                                <i class="fas fa-user-friends"></i></a>
+                            <p>Usuários</p>
+                        @else
+                            <a href="{{ route('relatrio.alerta') }}" class="icon-link">
+                                <i class="fas fa-user-friends"></i></a>
+                        @endif
                     </div>
                     <div class="icon">
                         <i class="fas fa-chart-line"></i>
@@ -35,15 +36,13 @@
                     </div>
                     <div class="icon">
                         <i class="fas fa-pencil"></i>
-                        <p>Inscrições</p>
+                        <p>Alunos</p>
                     </div>
                     <div class="icon">
-                        <i class="fas fa-user-check"></i>
+                        <a href="{{ route('relatorio.matricula') }}" class="icon-link" target="_blank"
+                            rel="noopener noreferrer">
+                            <i class="fas fa-user-check"></i></a>
                         <p>Matriculas</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-file-edit"></i>
-                        <p>Relatórios</p>
                     </div>
                 </div>
             </div>
@@ -97,9 +96,8 @@
                                 </select>
                             </div>
                             <div class="modal-footer ">
+                                <button type="submit" class="btn btn-primary">Pesquisar</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-primary" target="_blank"
-                                    rel="noopener noreferrer">Pesquisar</button>
                             </div>
                         </form>
                     </div>
@@ -107,4 +105,8 @@
             </div>
         </div>
     </div>
+
+    <script>
+       
+    </script>
 @endsection

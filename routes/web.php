@@ -104,6 +104,8 @@ Route::group(['middleware' => "auth"], function () {
     Route::get('relatorio/turma', [RelatorioController::class, 'show'])->name('relatorio.turmaluno');
     Route::get('relatorio/ficha/{anoletivo}/{id}', [RelatorioController::class, 'getFicha'])->name('relatorio.ficha');
     Route::get('relatorio/usuario', [RelatorioController::class, 'getUser'])->name('relatorio.usuario');
+    Route::get('relatorio/matricula', [RelatorioController::class, 'getMatricula'])->name('relatorio.matricula');
+    Route::get('relatorio/a/', [RelatorioController::class, 'getWarningAlert'])->name('relatrio.alerta');
 });
 
 
