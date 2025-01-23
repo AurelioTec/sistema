@@ -14,15 +14,14 @@ class UserController extends Controller
     //função resouce que traz os dados do banco
     public function index()
     {
-
         $usuario = Auth::User();
         //trazer todos os dados do banco de dados
         if ($usuario->tipo === 'Admin') {
             // Exibir todos os usuários
             $user = User::all();
-        } elseif ($usuario->tipo === 'Director') {
+        } elseif ($usuario->tipo === 'Diretor') {
             // Exibir apenas alguns usuários (defina a lógica de seleção)
-            $user = User::all()->slice(1); // Substitua 'condicao_especifica' pela lógica que você precisa
+            $user = User::all()->slice(1); // Skip o primeiro usuário
         }
         $userId = Auth::id();
         $funcionario = Funcionarios::where('Users_id', $userId)->first(); // Acessa o funcionário relacionado

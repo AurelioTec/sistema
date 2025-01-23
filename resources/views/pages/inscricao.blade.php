@@ -1,11 +1,11 @@
 @extends('base.app')
 @section('titulo')
-    -Inscrição
+    -Alunos
 @endsection
 @section('conteudo')
     <div class="container bg-light">
         <div class="card-header d-flex justify-content-between align-items-center pt-5">
-            <h4 class="mb-0">Alunos inscritos</h4>
+            <h4 class="mb-0">Lista de alunos</h4>
             <a href="#Cadastro" onclick="limpar()" data-bs-toggle="modal" data-bs-target="#Cadastro"
                 style="font-size: 28pt; color: #3498db">
                 <i class="fa fa-circle-plus"></i>

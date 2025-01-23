@@ -10,10 +10,10 @@
              Utilizadores</a>
      </li>
      <li class="nav-item">
-         <a class="nav-link" href="{{ route('inscricao') }}"><i class="fa fa-pencil"></i> Inscrições</a>
+         <a class="nav-link" href="{{ route('inscricao') }}"><i class="fa fa-user-graduate"></i> Alunos</a>
      </li>
      <li class="nav-item">
-         <a class="nav-link" href="{{ route('matricula') }}"><i class="fa fa-user-check"></i> Matrículas</a>
+         <a class="nav-link" href="{{ route('matricula') }}"><i class="fa fa-graduation-cap"></i> Matrículas</a>
      </li>
      <li class="nav-item">
          <a class="nav-link" href="{{ route('funcionario') }}"><i class="fa fa-users"></i>
@@ -32,10 +32,10 @@
              Utilizadores</a>
      </li>
      <li class="nav-item">
-         <a class="nav-link" href="{{ route('inscricao') }}"><i class="fa fa-pencil"></i> Inscrições</a>
+         <a class="nav-link" href="{{ route('inscricao') }}"><i class="fa fa-user-graduate"></i> Alunos</a>
      </li>
      <li class="nav-item">
-         <a class="nav-link" href="{{ route('matricula') }}"><i class="fa fa-user-check"></i> Matrículas</a>
+         <a class="nav-link" href="{{ route('matricula') }}"><i class="fa fa-graduation-cap"></i> Matrículas</a>
      </li>
      <li class="nav-item">
          <a class="nav-link" href="{{ route('funcionario') }}"><i class="fa fa-users"></i>
@@ -48,10 +48,10 @@
 
  @can('Pedagogico')
      <li class="nav-item">
-         <a class="nav-link" href="{{ route('inscricao') }}"><i class="fa fa-pencil"></i> Inscrições</a>
+         <a class="nav-link" href="{{ route('inscricao') }}"><i class="fa fa-user-graduate"></i> Alunos</a>
      </li>
      <li class="nav-item">
-         <a class="nav-link" href="{{ route('matricula') }}"><i class="fa fa-user-check"></i> Matrículas</a>
+         <a class="nav-link" href="{{ route('matricula') }}"><i class="fa fa-graduation-cap"></i> Matrículas</a>
      </li>
      <li class="nav-item">
          <a class="nav-link" href="{{ route('relatorio') }}"><i class="fa fa-file-edit"></i> Relatórios</a>
@@ -60,7 +60,7 @@
 
  @can('Tecnico')
      <li class="nav-item">
-         <a class="nav-link" href="{{ route('inscricao') }}"><i class="fa fa-pencil"></i> Inscrições</a>
+         <a class="nav-link" href="{{ route('inscricao') }}"><i class="fa fa-user-graduate"></i> Alunos</a>
      </li>
      <li class="nav-item">
          <a class="nav-link" href="{{ route('relatorio') }}"><i class="fa fa-file-edit"></i> Relatórios</a>
