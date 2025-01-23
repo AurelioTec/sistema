@@ -1,6 +1,6 @@
 @extends('base.app')
 @section('titulo')
-    -Funcionario
+    -Funcionarios
 @endsection
 @section('conteudo')
     <div class="container bg-light">
@@ -12,15 +12,13 @@
             </a>
         </div>
         <hr>
-        <table id="tabFuncionario" class="display tabela" style="width:100%">
+        <table id="tabFuncionario" class="display tabela " style="width:100%">
             <thead>
                 <tr>
                     <th>#</th>
                     <th>foto</th>
                     <th>Nº agente</th>
                     <th>Nome</th>
-                    <th>Categoria</th>
-                    <th>Habilitação</th>
                     <th>Função</th>
                     <th>Telefone</th>
                     <th></th>
@@ -33,11 +31,10 @@
                 @foreach ($funcio as $func)
                     <tr>
                         <td>{{ $i++ }}</td>
-                        <td><img src="{{ asset('img/upload/' . $func->foto) }}" alt="" style="width: 38px"></td>
+                        <td><img src="{{ asset('img/upload/funcio/' . $func->foto) }}" alt="" style="width: 38px">
+                        </td>
                         <td>{{ $func->nagente }}</td>
                         <td>{{ $func->nome }}</td>
-                        <td>{{ $func->categoria }}</td>
-                        <td>{{ $func->habilitacao }}</td>
                         <td>{{ $func->funcao }}</td>
                         <td>{{ $func->telf }}</td>
                         <td>
@@ -45,7 +42,7 @@
                                 class="btn text-success">
                                 <i class="fa fa-edit"></i>
                             </a>
-                            <a href="{{ route('funcionario.apagar', $func->id) }}" class="btn text-danger"
+                            <a href="{{ route('funcionario.excluir', Crypt::encrypt($func->id); ) }}" class="btn text-danger"
                                 data-confirm-delete="true">
                                 <i class="fa fa-trash"></i>
                             </a>
@@ -113,8 +110,8 @@
                             </div>
                             <div class="col-3">
                                 <label for="nagente">Nº de Agente</label>
-                                <input type="number" class="form-control" name="nagente" id="nagente" maxlength="8"
-                                    minlength="8">
+                                <input type="number" class="form-control" name="nagente" id="nagente" max="8"
+                                    maxlength="8" minlength="8">
                             </div>
 
                             <div class="col-4">
@@ -133,8 +130,9 @@
                                     accept="image/*">
                             </div>
                             <div class="modal-footer ">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                <button type="submit" id="submit" class="btn btn-primary">Guardar</button>
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </form>
                     </div>
@@ -154,6 +152,8 @@
             $('#telf').val(valor.telf);
             $('#funcao').val(valor.funcao);
             $('#email').val(valor.user.email);
+            $('#submit').text('Salvar');
+            $('#modalTitleId').text("Editar funcionario");
         }
 
         function limpar() {

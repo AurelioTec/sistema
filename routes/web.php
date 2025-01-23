@@ -82,8 +82,8 @@ Route::group(['middleware' => "auth"], function () {
     //Rotas Funcionarios
     Route::get('funcionario', [FuncionariosController::class, 'index'])->name('funcionario');
     Route::post('funcionario', [FuncionariosController::class, 'store'])->name('funcionario.cadastrar');
-    Route::delete('delete/{id}', [FuncionariosController::class, 'deletar'])->name('funcionario.apagar');
-    //Rotas Inscrição
+    Route::delete('funcionario/excluir/{id}', [FuncionariosController::class, 'deletar'])->name('funcionario.excluir');
+    //Rotas aluno
     Route::get('aluno/municipios/{id}', [InscricaoController::class, 'getMunicipios'])->name('municipios');
     Route::get('aluno/turmas/{classe}/{periodo}', [InscricaoController::class, 'getTurmas'])->name('turmas');
     Route::get('aluno/inscriao/{id}', [InscricaoController::class, 'getAlunoById'])->name('alunoId');

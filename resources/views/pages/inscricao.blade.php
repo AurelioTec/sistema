@@ -322,7 +322,7 @@
             $('#telf').val(valor.telf);
             $('#obs').val(valor.obs);
             $('#submit').text('Salvar');
-            $('#modalTitleId').text("Editar inscrição");
+            $('#modalTitleId').text("Editar aluno");
         }
 
         function limpar() {

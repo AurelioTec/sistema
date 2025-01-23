@@ -6,6 +6,7 @@ use App\Models\Funcionarios;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class FuncionariosController extends Controller
@@ -15,9 +16,17 @@ class FuncionariosController extends Controller
      */
     public function index()
     {
-        $funcio = Funcionarios::all();
-        $userId = Auth::id();
-        $funcionario = Funcionarios::where('Users_id', $userId)->first(); // Acessa o funcionário relacionado
+        $user = Auth::user();
+        if ($user->tipo === "Diretor") {
+            $funcio = Funcionarios::with('user')
+                ->where('funcao', '!=', 'Admin Super Geral')->get();;
+        } elseif ($user->tipo === "Admin") {
+            $funcio = Funcionarios::with('user')->get();
+        }
+        $title = 'Atenção!';
+        $text = "Tem certeza que dejesas excluir o funcionarios!?";
+        confirmDelete($title, $text);
+        $funcionario = Funcionarios::where('Users_id', Auth::id())->first(); // Acessa o funcionário relacionado
         return view('pages.funcionario', compact('funcio', 'funcionario'));
     }
 
@@ -39,7 +48,7 @@ class FuncionariosController extends Controller
             $user = new User();
             $user->name = $request->nome;
             $user->email = $request->email;
-            $user->password = bcrypt('123456');
+            $user->password = bcrypt($user->tipo . '123');
             $user->tipo = "Tecnico";
             $user->save();
             $funcio = new Funcionarios();
@@ -121,5 +130,12 @@ class FuncionariosController extends Controller
             Alert::error('Erro', 'Usuário ou funcionário não encontrado');
             return redirect()->back();
         }
+    }
+
+    public function deletar($id)
+    {
+        Funcionarios::find(Crypt::decrypt($id))->delete();
+        Alert::success('Sucesso', 'Funcionario excluida!');
+        return redirect()->back();
     }
 }
