@@ -10,7 +10,7 @@
                 <div class="admin-dashboard">
                     <div class="icon">
                         <a href="#getTurma" data-bs-toggle="modal" data-bs-target="#getTurma" class="icon-link"><i
-                                class="fas fa-user-friends"></i></a>
+                                class="fas fa-users"></i></a>
                         <p>Alunos por turmas</p>
                     </div>
                     <div class="icon">
@@ -35,13 +35,13 @@
                         <p>Turmas</p>
                     </div>
                     <div class="icon">
-                        <i class="fas fa-pencil"></i>
+                        <i class="fas fa-user-graduate"></i>
                         <p>Alunos</p>
                     </div>
                     <div class="icon">
                         <a href="{{ route('relatorio.matricula') }}" class="icon-link" target="_blank"
                             rel="noopener noreferrer">
-                            <i class="fas fa-user-check"></i></a>
+                            <i class="fas fa-graduation-cap"></i></a>
                         <p>Matriculas</p>
                     </div>
                 </div>
@@ -106,7 +106,5 @@
         </div>
     </div>
 
-    <script>
-       
-    </script>
+    <script></script>
 @endsection
