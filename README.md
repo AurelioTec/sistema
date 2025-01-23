@@ -100,7 +100,7 @@ Acesse o sistema em: `http://localhost:8000`
 
 ### Tela de Login
 
-![Tela de Login](<img src="https://github.com/AurelioTec/sistema/blob/main/public/img/blade/login.jpeg?raw=true">)
+(<img src="https://github.com/AurelioTec/sistema/blob/main/public/img/blade/login.jpeg?raw=true">)
 
 ### Painel de Controle
 
