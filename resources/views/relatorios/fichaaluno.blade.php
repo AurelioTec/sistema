@@ -26,12 +26,12 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-6">
                 <label><strong>Idade Provável até Agosto: </strong><span
                         class="text-decoration-underline">{{ \Carbon\Carbon::parse($aluno->inscricao->datanascimento)->age }}</span>anos</label>
             </div>
-            <div class="col-md-6">
-                <strong>GENERO:</strong>
+            <div class="col-md-6 col-sm-6">
+                <strong class="text-center">GENERO:</strong>
                 @if ($aluno->inscricao->genero == 'M')
                     <label class="form-check-label me-3">M<input type="checkbox" checked disabled
                             class="ms-1"></label>
@@ -44,10 +44,10 @@
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-6">
                 <label><strong>Processo Individual Nº:</strong><span class="text-decoration-underline"></span></label>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-6">
                 <label><strong>Nº de Matrícula: </strong><span
                         class="text-decoration-underline">{{ $aluno->numatricula }}</span></label>
             </div>
