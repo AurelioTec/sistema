@@ -41,11 +41,12 @@
                         <td>{{ $matri->turma->anolectivo }}</td>
                         <td>
                             <a href="#Cadastro" data-bs-toggle="modal" onclick="editar({{ json_encode($matri) }})"
-                                class="btn text-success">
+                                class="btn text-success" title="Editar dados de matricula">
                                 <i class="fa fa-edit"></i>
                             </a>
                             <a href="{{ route('relatorio.ficha', [$matri->turma->anolectivo, Illuminate\Support\Facades\Crypt::encryptString($matri->id)]) }}"
-                                class="btn text-primary" target="_blank" rel="noopener noreferrer">
+                                class="btn text-primary" target="_blank" rel="noopener noreferrer"
+                                title="Imprimir ficha de matricula">
                                 <i class="fa fa-print"></i>
                             </a>
                             <a href="#" class="btn text-danger" data-confirm-delete="true">

@@ -39,11 +39,11 @@
                         <td>{{ $func->telf }}</td>
                         <td>
                             <a href="#Cadastro" data-bs-toggle="modal" onclick="editar({{ json_encode($func) }})"
-                                class="btn text-success">
+                                class="btn text-success" title="Editar dadod do funcionario">
                                 <i class="fa fa-edit"></i>
                             </a>
                             <a href="{{ route('funcionario.excluir', Crypt::encrypt($func->id)) }}" class="btn text-danger"
-                                data-confirm-delete="true">
+                                data-confirm-delete="true" title="Excluir funcionario">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </td>
