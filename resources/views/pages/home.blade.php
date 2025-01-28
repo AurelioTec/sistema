@@ -120,8 +120,36 @@
                     </div>
                 </div>
             </div>
-
-
+            <!-- Card 7: Total de alunos do genero masculino-->
+            <div class="col-md-3">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="icon text-danger">
+                            <i class="fa-solid fa-person-dress" style="color: rgb(236, 30, 181)"></i>
+                        </div>
+                        <h5 class="card-title">Total Femenino</h5>
+                        <p class="card-text">Total de alunos do genero Femenino</p>
+                        <div class="list-group">
+                            <p class="list-group-item"> {{ $countG }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 8: Total de alunos do genero masculino -->
+            <div class="col-md-3">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="icon text-danger">
+                            <i class="fas fa-male text-primary"></i>
+                        </div>
+                        <h5 class="card-title">Total Masculino</h5>
+                        <p class="card-text">Total de alunos do genero masculino</p>
+                        <div class="list-group">
+                            <p class="list-group-item"> {{ $total - $countG }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ConfigIniController;
 use App\Http\Controllers\FuncionariosController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InscricaoController;
 use App\Http\Controllers\MatriculaController;
 use App\Http\Controllers\RelatorioController;
@@ -22,50 +23,7 @@ Route::get('sair', function () {
 Route::group(['middleware' => "auth"], function () {
 
 
-    Route::get('/', function () {
-        $user = Auth::user(); // Obtém o usuário autenticado
-        $userId = Auth::id();
-        // Total de matrículas
-        $total = Matricula::count();
-
-        // Matrículas ativas
-        $MatriAtiva = Matricula::where('estado', 'Ativo')->count();
-
-        // Matrículas do tipo "Novo"
-        $MatriNova = Matricula::where('tipomatricula', 'Novo')->count();
-
-        // Contar o total de turmas existentes
-        $totalTurmas = Turma::count();
-
-        // Contar quantas turmas têm alunos matriculados
-        $turmasComAlunos = Matricula::select('turmas_id', DB::raw('count(*) as total'))
-            ->groupBy('turmas_id')
-            ->get();
-        $turmaAlunosMatri = $turmasComAlunos->count();
-
-        // Se desejar também saber a quantidade total de alunos matriculados por turma, como já estava no seu código
-        $MatriPorTurma = Matricula::select('turmas_id', DB::raw('count(*) as total'))
-            ->groupBy('turmas_id')
-            ->get();
-        $porcentagem = $totalTurmas > 0 ? ($turmaAlunosMatri / $totalTurmas) * 100 : 0;
-        $totalTurmasDif = Matricula::distinct('turmas_id')->count('turmas_id');
-
-
-        $funcionario = Funcionarios::where('Users_id', $userId)->first(); // Acessa o funcionário relacionado
-        return view('pages.home', compact(
-            'user',
-            'funcionario',
-            'total',
-            'MatriAtiva',
-            'MatriNova',
-            'porcentagem',
-            'MatriPorTurma',
-            'totalTurmas',
-            'totalTurmasDif',
-            'turmasComAlunos',
-            'turmaAlunosMatri',
-        ));
-    });
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
     //rotas Configini
 
