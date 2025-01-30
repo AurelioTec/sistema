@@ -63,6 +63,9 @@
          <a class="nav-link" href="{{ route('inscricao') }}"><i class="fa fa-user-graduate"></i> Alunos</a>
      </li>
      <li class="nav-item">
+         <a class="nav-link" href="{{ route('matricula') }}"><i class="fa fa-graduation-cap"></i> Matrículas</a>
+     </li>
+     <li class="nav-item">
          <a class="nav-link" href="{{ route('relatorio') }}"><i class="fa fa-file-edit"></i> Relatórios</a>
      </li>
  @endcan

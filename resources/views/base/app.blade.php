@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset('DataTables/datatables.min.css') }}">
     <link rel="shortcut icon" href="{{ asset('img/blade/favicon.ico') }}" type="image/x-icon">
     <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
 

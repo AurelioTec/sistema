@@ -3,6 +3,7 @@
     -Maticula
 @endsection
 @section('conteudo')
+    @include('sweetalert::sweetalert')
     <div class="container bg-light">
         <div class="card-header d-flex justify-content-between align-items-center pt-5">
             <h4 class="mb-0">Lista alunos matriculados</h4>
@@ -21,7 +22,7 @@
                     <th>Turma</th>
                     <th>Periodo</th>
                     <th>Sala</th>
-                    <th>Ano Lectivo</th>
+                    <th>Estado</th>
                     <th></th>
                 </tr>
             </thead>
@@ -38,12 +39,20 @@
                         <td>{{ $matri->turma->codigo }}</td>
                         <td>{{ $matri->turma->periodo }}</td>
                         <td>{{ $matri->turma->sala }}</td>
-                        <td>{{ $matri->turma->anolectivo }}</td>
+                        <td>{{ $matri->estado }}</td>
                         <td>
-                            <a href="#Cadastro" data-bs-toggle="modal" onclick="editar({{ json_encode($matri) }})"
-                                class="btn text-success" title="Editar dados de matricula">
-                                <i class="fa fa-edit"></i>
-                            </a>
+                            @if (Auth::check() &&
+                                    (Auth::user()->tipo === 'Admin' || Auth::user()->tipo === 'Diretor' || Auth::user()->tipo === 'Pedagogico'))
+                                <a href="#Matricula" data-bs-toggle="modal" onclick="editar({{ json_encode($matri) }})"
+                                    class="btn text-success" title="Aprovar matricula">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            @else
+                                <a href="#" data-bs-toggle="modal" onclick="acessoNegado()" class="btn text-success"
+                                    title="Aprovar matricula">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            @endif
                             <a href="{{ route('relatorio.ficha', [$matri->turma->anolectivo, Illuminate\Support\Facades\Crypt::encryptString($matri->id)]) }}"
                                 class="btn text-primary" target="_blank" rel="noopener noreferrer"
                                 title="Imprimir ficha de matricula">
@@ -64,84 +73,86 @@
         </table>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade " id="Cadastro" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+    <!-- Modal Matricula -->
+    <div class="modal fade " id="Matricula" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-lg tela" role="document">
             <div class="modal-content bg-light">
                 <div class="modal-header ">
-                    <h5 class="modal-title" id="modalTitleId">Cadastrar funcionario</h5>
+                    <h5 class="modal-title" id="modalTitleId">Matricular aluno</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body ">
                     <div class="container-fluid">
-                        <form action="#" class="row g-3" method="POST" enctype="multipart/form-data">
+                        <div class="aluno-perfil d-flex align-items-center mb-4 p-3 border rounded">
+                            <img src="" alt="Foto do Aluno" class="foto-aluno rounded-circle me-3" width="100"
+                                height="100">
+                            <div>
+                                <h5 class="mb-1"><strong>Nome:</strong> <span id="nomeAluno"></span></h5>
+                                <p class="mb-0"><strong>Gênero:</strong> <span id="Genero"></span></p>
+                                <p class="mb-0"><strong>Data de Nascimento:</strong> <span id="dataNascimento"></span>
+                                </p>
+
+                            </div>
+                        </div>
+                        <hr>
+                        <form action="{{ route('aluno.matricular') }}" method="POST" enctype="multipart/form-data"
+                            class="row g-3">
                             @csrf
                             <input type="hidden" name="id" id="id">
-
-                            <div class="col-6">
-                                <label for="nome">Nome</label>
-                                <input type="text" class="form-control" name="nome" id="nome" required>
-                            </div>
-
+                            <input type="hidden" name="alunoId" id="alunoId">
+                            <input type="hidden" name="nomeAluno" id="nomeluno">
+                            <input type="hidden" name="anoletivo" id="anoletivo">
                             <div class="col-3">
-                                <label for="datanascimento">Data de Nascimento</label>
-                                <input type="date" class="form-control" name="datanascimento" id="datanascimento"
-                                    required>
+                                <label for="classe" class="form-label">Classe</label>
+                                <select id="classe" class="form-control" name="classe" required>
+                                    <option value="7ª">7ª</option>
+                                    <option value="8ª">8ª</option>
+                                    <option value="9ª">9ª</option>
+                                </select>
                             </div>
-
                             <div class="col-3">
-                                <label for="genero">Gênero</label>
-                                <select name="genero" id="genero" class="form-control" required>
-                                    <option value="" disabled selected>Selecione o gênero</option>
-                                    <option value="M">Masculino</option>
-                                    <option value="F">Feminino</option>
+                                <label for="periodo" class="form-label">Período</label>
+                                <select id="periodo" class="form-control" name="periodo" required>
+                                    <option value="Manhã">Manhã</option>
+                                    <option value="Tarde">Tarde</option>
+                                    <option value="Noite">Noite</option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <label for="turma" class="form-label">Turma</label>
+                                <select class="form-select" id="turma" name="turma" required>
                                 </select>
                             </div>
 
                             <div class="col-3">
-                                <label for="telf">Telefone</label>
-                                <input type="tel" class="form-control" name="telf" id="telf" required>
-                            </div>
-
-                            <div class="col-3">
-                                <label for="habilitacao">Habilitação</label>
-                                <select name="habilitacao" id="habilitacao" class="form-control" required>
-                                    <option value="" disabled selected>Selecione a habilitação</option>
-                                    <option value="Médio">Ensino Médio</option>
-                                    <option value="Superior">Ensno Superior</option>
-                                    <option value="Mestre">Mestrado</option>
-                                    <option value="Doutor">Doutoramento</option>
+                                <label for="lestrangeira" class="form-label">L.Estrangeira</label>
+                                <select class="form-select" id="lestrangeira" name="lestrangeira" required>
+                                    <option value="Inglês">Inglês</option>
+                                    <option value="Francês">Francês</option>
                                 </select>
                             </div>
 
                             <div class="col-6">
-                                <label for="categoria">Categoria</label>
-                                <input type="text" class="form-control" name="categoria" id="categoria" required>
-                            </div>
-                            <div class="col-3">
-                                <label for="nagente">Nº de Agente</label>
-                                <input type="number" class="form-control" name="nagente" id="nagente" maxlength="8"
-                                    minlength="8">
+                                <label for="encarregado" class="form-label">Encarregado</label>
+                                <input type="text" class="form-control" id="encarregado" name="encarregado"
+                                    maxlength="120">
                             </div>
 
-                            <div class="col-4">
-                                <label for="funcao">Funcão</label>
-                                <input type="text" class="form-control" name="funcao" id="funcao" required>
+                            <div class="col-6">
+                                <label for="telfencarregado" class="form-label">Telf.Encarregado</label>
+                                <input type="tel" class="form-control" id="telfencarregado" name="telfencarregado"
+                                    maxlength="15">
                             </div>
 
-                            <div class="col-5">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" name="email" id="email" required>
-                            </div>
-
-                            <div class="col-12">
-                                <label for="foto">Foto</label>
-                                <input type="file" class="form-control" name="foto" id="foto"
-                                    accept="image/*">
+                            <div class="col-md-8">
+                                <label for="anexo" class="form-label">Anexar(*certificado,*termos, boletim de nota) em
+                                    PDF max 2MB</label>
+                                <input type="file" class="form-control" id="anexo" name="anexo">
                             </div>
                             <div class="modal-footer ">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                <button type="submit" class="btn btn-primary">Matricular</button>
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Cancelar</button>
                             </div>
                         </form>
                     </div>
@@ -150,6 +161,14 @@
         </div>
     </div>
     <script>
+        function acessoNegado() {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Acesso negado',
+                text: 'Você não tem permissão para aprovar matricula',
+            });
+        }
+
         function editar(valor) {
             $('#id').val(valor.id);
             $('#nome').val(valor.nome);
