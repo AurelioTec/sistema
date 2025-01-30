@@ -5,6 +5,7 @@ use App\Http\Controllers\FuncionariosController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InscricaoController;
 use App\Http\Controllers\MatriculaController;
+use App\Http\Controllers\PerfilAlunoController;
 use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\UserController;
@@ -48,6 +49,7 @@ Route::group(['middleware' => "auth"], function () {
     Route::get('aluno', [InscricaoController::class, 'index'])->name('inscricao');
     Route::post('aluno', [InscricaoController::class, 'store'])->name('aluno.cadastrar');
     Route::get('aluno/excluir/{id}', [InscricaoController::class, 'deletar'])->name('aluno.excluir');
+    Route::get('aluno/perfil/{id}', [PerfilAlunoController::class, 'show'])->name('perfil.aluno');
     //Rotas turma
     Route::get('turma', [TurmaController::class, 'index'])->name('turma');
     Route::post('turma', [TurmaController::class, 'store'])->name('turma.cadastrar');

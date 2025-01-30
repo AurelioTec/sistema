@@ -34,7 +34,7 @@
                     <tr>
                         <td>{{ $i++ }}</td>
                         <td>{{ $matri->numatricula }}</td>
-                        <td><a href="#" class="text-dark text-decoration-none"
+                        <td><a href="{{ route('perfil.aluno', $matri->id) }}" class="text-dark text-decoration-none"
                                 title="Clicar para ver o perfil do aluno">
                                 {{ $matri->inscricao->nomealuno }}
                             </a></td>
