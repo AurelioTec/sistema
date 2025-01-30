@@ -32,25 +32,28 @@
                 @endphp
                 @foreach ($matriculados as $matri)
                     <tr>
-
                         <td>{{ $i++ }}</td>
                         <td>{{ $matri->numatricula }}</td>
-                        <td>{{ $matri->inscricao->nomealuno }}</td>
+                        <td><a href="#" class="text-dark text-decoration-none"
+                                title="Clicar para ver o perfil do aluno">
+                                {{ $matri->inscricao->nomealuno }}
+                            </a></td>
                         <td>{{ $matri->turma->codigo }}</td>
                         <td>{{ $matri->turma->periodo }}</td>
                         <td>{{ $matri->turma->sala }}</td>
                         <td>{{ $matri->estado }}</td>
                         <td>
+
                             @if (Auth::check() &&
                                     (Auth::user()->tipo === 'Admin' || Auth::user()->tipo === 'Diretor' || Auth::user()->tipo === 'Pedagogico'))
                                 <a href="#Matricula" data-bs-toggle="modal" onclick="editar({{ json_encode($matri) }})"
                                     class="btn text-success" title="Aprovar matricula">
-                                    <i class="fa fa-edit"></i>
+                                    <i class="fa fa-check-circle"></i>
                                 </a>
                             @else
                                 <a href="#" data-bs-toggle="modal" onclick="acessoNegado()" class="btn text-success"
                                     title="Aprovar matricula">
-                                    <i class="fa fa-edit"></i>
+                                    <i class="fa fa-check-circle"></i>
                                 </a>
                             @endif
                             <a href="{{ route('relatorio.ficha', [$matri->turma->anolectivo, Illuminate\Support\Facades\Crypt::encryptString($matri->id)]) }}"
@@ -58,11 +61,8 @@
                                 title="Imprimir ficha de matricula">
                                 <i class="fa fa-print"></i>
                             </a>
-                            <a href="#" class="btn text-danger" data-confirm-delete="true">
-                                <i class="fa fa-trash"></i>
-                            </a>
                             <a href="{{ asset('storage/' . $matri->anexo) }}" class="btn text-warning" target="_blank"
-                                rel="noopener noreferrer" title="Baixar o arquivo">
+                                rel="noopener noreferrer" title="Baixar o anexo">
                                 <i class="fa fa-paperclip"></i>
                             </a>
 

@@ -9,6 +9,7 @@ use App\Models\matricula;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -122,4 +123,20 @@ class MatriculaController extends Controller
             return redirect()->back();
         }
     }
+
+public function suspenderAluno($id){
+    $matricula = Matricula::find( Crypt::decrypt($id));
+    $matricula->estado = 'Suspenso';
+    $matricula->save();
+
+    if ($matricula) {
+        Alert::success('Sucesso', 'Aluno suspenso com sucesso');
+        return redirect()->back();
+    } else {
+        Alert::error('Erro', 'Erro ao suspender o aluno');
+        return redirect()->back();
+    }
+}
+
+
 }
