@@ -18,7 +18,7 @@
     <script>
         $(document).ready(function() {
 
-            if ($.fn.dataTable.isDataTable('#tabela')) {
+            if ($.fn.dataTable.isDataTable('.tabela')) {
                 $('.tabela').DataTable().destroy();
             }
 
@@ -259,12 +259,6 @@
 
     <script src="{{ asset('DataTables/datatables.min.js') }}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-
-
-        });
-    </script>
 </body>
 
 </html>
