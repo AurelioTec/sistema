@@ -5,14 +5,15 @@
 @section('conteudo')
     <div class="container bg-light">
         <div class="card-header d-flex justify-content-between align-items-center pt-5">
-            <h4 class="mb-0">Lista de utilizadores</h4>
+            <h4 class="mb-0">Lista de utlizadores</h4>
             <a href="#Cadastro" onclick="limpar()" data-bs-toggle="modal" data-bs-target="#Cadastro"
-                style="font-size: 28pt; color: #3498db" title=" Adicionar Utilizador">
+                class="btn btn-success text-light" title="Configurar novo ano Letivo">
                 <i class="fa fa-circle-plus"></i>
+                Adicionar
             </a>
         </div>
         <hr class="mb-0">
-        <table id="tabUsuario" class="display tabela" style="width:100%">
+        <table id="tabUsuario" class="display tabela pt-2" style="width:100%">
             <thead>
                 <tr>
                     <th>#</th>
