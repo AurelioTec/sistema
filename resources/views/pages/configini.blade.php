@@ -7,12 +7,12 @@
         <div class="card-header d-flex justify-content-between align-items-center pt-5">
             <h4 class="mb-0">Configurar ano lectivo</h4>
             <a href="#Cadastro" onclick="limpar()" data-bs-toggle="modal" data-bs-target="#Cadastro"
-                class="btn btn-info text-dark" title="Configurar novo ano Letivo">
+                class="btn btn-success text-light" title="Configurar novo ano Letivo">
                 <i class="fa fa-circle-plus"></i>
                 Adicionar
             </a>
         </div>
-        <hr>
+        <hr class="mb-0">
         <table id="tabConfigIni" class=" tabela display pt-2 " style="width:100%">
             <thead>
                 <tr>

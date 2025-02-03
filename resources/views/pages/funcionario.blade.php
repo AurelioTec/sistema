@@ -11,7 +11,7 @@
                 <i class="fa fa-circle-plus"></i>
             </a>
         </div>
-        <hr>
+        <hr class="m-0">
         <table id="tabFuncionario" class="display tabela " style="width:100%">
             <thead>
                 <tr>
