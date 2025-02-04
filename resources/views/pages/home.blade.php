@@ -7,8 +7,8 @@
         <div class="card-header d-flex justify-content-between align-items-center pt-3 ">
             <h4 class="mb-0">Pagina inicial</h4>
         </div>
-        <hr class="m-0">
-        <div class="row pb-4 ">
+        <hr>
+        <div class="row mt-3">
             <!-- Card 1: Total de Matrículas -->
             <div class="col-md-3 mb-3 " style="height: 200px">
                 <div class="card shadow-sm"style="height: 200px">
