@@ -14,12 +14,12 @@ class PerfilAlunoController extends Controller
     public function show($id)
     {
         // Descriptografando o ID
-        //$decryptedId = Crypt::decrypt($id);
+        $decryptedId = Crypt::decrypt($id);
 
         // Obter os dados do aluno (Inscrição e Matrícula)
         $userId = Auth::id();
-        $funcionario = Funcionarios::where('Users_id', $userId)->first(); // Acessa o funcionário relacionado
-        $aluno = Inscricao::with('municipios')->findOrFail($id);
+        $funcionario = Funcionarios::where('Users_id',  $userId)->first(); // Acessa o funcionário relacionado
+        $aluno = Inscricao::with('municipios')->where('id', $decryptedId)->first();
 
         $matricula = Matricula::where('inscricaos_id', $aluno->id)->first();
 
