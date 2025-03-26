@@ -23,6 +23,10 @@ class MatriculaController extends Controller
         $userId = Auth::id();
         $funcionario = Funcionarios::where('Users_id', $userId)->first(); // Acessa o funcionário relacionado
         $matriculados = Matricula::with('inscricao', 'turma', 'usuario')->get();
+
+        $title = 'Atenção!';
+        $text = "Deseja aprovar a matricula do aluno!?";
+        confirmDelete($title, $text);
         return view('pages.matricula', compact('matriculados', 'funcionario'));
     }
 
@@ -136,6 +140,21 @@ public function suspenderAluno($id){
         Alert::error('Erro', 'Erro ao suspender o aluno');
         return redirect()->back();
     }
+}
+
+public function confirmar($id){
+    $idmatricula=Crypt::decrypt($id);
+    $matricula = Matricula::find($idmatricula);
+    if(!$matricula ){
+        Alert::success('Erro', 'Numero de Matricula não encontrada');
+        return redirect()->back();
+    }else{
+    $matricula->estado = 'Aprovada';
+    $matricula->save();
+    Alert::success('Sucesso', 'Matricula aprovada com sucesso');
+    return redirect()->back();
+    }
+
 }
 
 
