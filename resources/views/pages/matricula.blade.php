@@ -48,13 +48,20 @@
                     @endphp
 
                     @if (Auth::check() && (Auth::user()->tipo === 'Admin' || Auth::user()->tipo === 'Diretor' || Auth::user()->tipo === 'Pedagogico'))
-                    @if ($matri->estado==='Pendente')
+                    @switch($matri->estado)
+                    @case('Pendente')
                     <a href="{{ route('matricula.confirmar', Crypt::encrypt($matri->id)) }}"
                         class="btn text-success" title="Aprovar matricula">
                         <i class="fa fa-check-circle"></i>
                     </a>
-                    @else
-                    @endif
+                    @break
+                    @case('Aprovada')
+                    <a href="#" data-bs-toggle="modal" onclick="infoAprovado()" class="btn text-success"
+                        title="Aprovar matricula">
+                        <i class="fa fa-check-circle"></i>
+                    </a>
+                    @break
+                    @endswitch
                     @else
                     <a href="#" data-bs-toggle="modal" onclick="acessoNegado()" class="btn text-success"
                         title="Aprovar matricula">
@@ -174,6 +181,13 @@
         });
     }
 
+    function infoAprovado() {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Atenção',
+            text: 'A matricula ja se encontra aprovada!',
+        });
+    }
     /*  function confirmar(url) {
           Swal.fire({
               icon: "warning",

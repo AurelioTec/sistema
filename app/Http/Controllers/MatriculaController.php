@@ -128,16 +128,23 @@ class MatriculaController extends Controller
         }
     }
 
-public function suspenderAluno($id){
-    $matricula = Matricula::find( Crypt::decrypt($id));
-    $matricula->estado = 'Suspenso';
+/**
+ * suspender a mtricula do aluno
+ *
+ * @param  mixed $id
+ * @return void
+ */
+public function suspender($id){
+    $idmatricula=Crypt::decrypt($id);
+    $matricula = Matricula::findOrFail($idmatricula);
+    $matricula->estado = 'Suspensa';
     $matricula->save();
 
     if ($matricula) {
-        Alert::success('Sucesso', 'Aluno suspenso com sucesso');
+        Alert::success('Sucesso', 'Matricula suspensa com sucesso');
         return redirect()->back();
     } else {
-        Alert::error('Erro', 'Erro ao suspender o aluno');
+        Alert::error('Erro', 'Erro ao suspender a matricula');
         return redirect()->back();
     }
 }

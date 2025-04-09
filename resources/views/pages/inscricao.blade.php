@@ -5,7 +5,7 @@
 @section('conteudo')
 <div class="container bg-light">
     <div class="card-header d-flex justify-content-between align-items-center pt-5">
-        <h4 class="mb-0">Lista de alunos</h4>
+        <h4 class="mb-0">Lista de alunos inscritos</h4>
         <a href="#Cadastro" onclick="limpar()" data-bs-toggle="modal" data-bs-target="#Cadastro"
             class="btn btn-success text-light" title="Configurar novo ano Letivo">
             <i class="fa fa-circle-plus"></i>

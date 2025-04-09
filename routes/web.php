@@ -58,6 +58,7 @@ Route::group(['middleware' => "auth"], function () {
     Route::get('matricula', [MatriculaController::class, 'index'])->name('matricula');
     Route::post('aluno/matricular', [MatriculaController::class, 'store'])->name('aluno.matricular');
     Route::get('matricula/confirmar/{id}', [MatriculaController::class, 'confirmar'])->name('matricula.confirmar');
+    Route::get('matricula/suspender/{id}', [MatriculaController::class, 'suspender'])->name('matricula.suspender');
     //Route::delete('delete/{id}', [FuncionariosController::class, 'deletar'])->name('funcionario.apagar');
     //Rotas Relatorio
     Route::get('relatorio', [RelatorioController::class, 'index'])->name('relatorio');
