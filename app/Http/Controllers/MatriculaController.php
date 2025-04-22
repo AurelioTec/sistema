@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Funcoes;
+use App\Models\ConfigIni;
 use App\Models\Funcionarios;
 use App\Models\Inscricao;
 use App\Models\matricula;
+use App\Models\Turma;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -23,11 +26,16 @@ class MatriculaController extends Controller
         $userId = Auth::id();
         $funcionario = Funcionarios::where('Users_id', $userId)->first(); // Acessa o funcionário relacionado
         $matriculados = Matricula::with('inscricao', 'turma', 'usuario')->get();
-
+        $ultimoAno = ConfigIni::orderBy('anoletivo', 'desc') // Ordena por anoletivo decrescente
+            ->selectRaw('anoletivo')                // Seleciona os campos necessários
+            ->first();                                     // Pega o primeiro registro
+        $config = ConfigIni::where('anoletivo', $ultimoAno->anoletivo)
+            ->selectRaw('anoletivo, salas')
+            ->get();
         $title = 'Atenção!';
         $text = "Deseja aprovar a matricula do aluno!?";
         confirmDelete($title, $text);
-        return view('pages.matricula', compact('matriculados', 'funcionario'));
+        return view('pages.matricula', compact('matriculados', 'funcionario','config'));
     }
 
     /**
@@ -164,5 +172,33 @@ public function confirmar($id){
 
 }
 
+public function alterarResultado(Request $request){
+    $idmatricula=Crypt::decrypt($request->id);
+    $matricula = Matricula::findOrfail($idmatricula);
+    if(!$matricula ){
+        Alert::success('Erro', 'Numero de Matricula não encontrada');
+        return redirect()->back();
+    }else{
+    $matricula->resultado = 'Aprovado';
+    $matricula->save();
+    Alert::success('Sucesso', 'Resultado alterado com sucesso');
+    return redirect()->back();
+    }
+}
+
+/**
+ * getTurmas
+ *
+ * @param  mixed $classe
+ * @param  mixed $periodo
+ * @return void
+ */
+public function getTurmas($classe, $periodo)
+{
+    $turmas = Turma::where('classe', $classe)
+        ->where('periodo', $periodo)
+        ->get();
+    return response()->json($turmas);
+}
 
 }

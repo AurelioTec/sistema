@@ -13,6 +13,7 @@
     <title>{{ config('app.name', 'Laravel') }} @yield('titulo')</title>
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('fontawesome/css/all.css') }}">
+    <link rel="stylesheet" href="{{ asset('sweetalert2/sweetalert2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <link rel="shortcut icon" href="{{ asset('img/blade/favicon.ico') }}" type="image/x-icon">
     <script src="{{ asset('js/jquery.js') }}"></script>
@@ -57,6 +58,18 @@
     </div>
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('sweetalert2/sweetalert2.min.js') }}"></script>
+    <script>
+        @if(session('login_error'))
+        //alert("{{ session('login_error') }}");
+        Swal.fire({
+            icon: "error",
+            title: "Erro!",
+            text: "{{ session('login_error') }}",
+        });
+        //toastr.error("{{ session('login_error') }}");
+        @endif
+    </script>
 </body>
 
 </html>

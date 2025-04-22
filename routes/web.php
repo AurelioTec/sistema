@@ -59,6 +59,7 @@ Route::group(['middleware' => "auth"], function () {
     Route::post('aluno/matricular', [MatriculaController::class, 'store'])->name('aluno.matricular');
     Route::get('matricula/confirmar/{id}', [MatriculaController::class, 'confirmar'])->name('matricula.confirmar');
     Route::get('matricula/suspender/{id}', [MatriculaController::class, 'suspender'])->name('matricula.suspender');
+    Route::get('matricula/alunoturma/{classe}/{periodo}', [MatriculaController::class, 'getTurmas'])->name('matricula.turma');
     //Route::delete('delete/{id}', [FuncionariosController::class, 'deletar'])->name('funcionario.apagar');
     //Rotas Relatorio
     Route::get('relatorio', [RelatorioController::class, 'index'])->name('relatorio');

@@ -210,6 +210,58 @@
 
             });
         });
+
+        $(document).ready(function() {
+            // Função corrigida para carregar a turma
+            function getAlunoTurma(classe, periodo) {
+
+                if (classe && periodo) { // Usando "&&" para verificar ambas as condições
+
+                    $.ajax({
+                        url: 'matricula/alunoturma/' + classe + '/' + periodo,
+                        type: 'GET',
+                        success: function(data) {
+                            // Limpando os selects antes de carregar
+                            $('#turmas').empty().append('<option value="" disabled>Turma</option>');
+                            $.each(data, function(key, turma) {
+                                $('#turmas').append('<option value="' + turma.descricao + '">' +
+                                    turma
+                                    .descricao + '</option>');
+                            });
+                        } // Fechando o parêntese corretamente
+                    });
+                }
+            }
+            $('#getAlunoTurma').on('shown.bs.modal', function() {
+                // Função chamada inicialmente quando o modal for exibido
+                var classe = $('#classe').val();
+                var periodo = $('#periodo').val();
+
+                // Chama a função com os valores iniciais
+                getAlunoTurma(classe, periodo);
+
+                // Evento de mudança no campo "classe"
+                $('#classe').change(function() {
+                    classe = $(this).val(); // Atualiza o valor de "classe"
+                    getAlunoTurma(classe, periodo); // Chama a função com o novo valor de "classe"
+                });
+
+                //Evento de mudança no campo "periodo"
+                $('#periodo').change(function() {
+                    periodo = $(this).val(); // Atualiza o valor de "periodo"
+                    getAlunoTurma(classe, periodo); // Chama a função com o novo valor de "periodo"
+                });
+            });
+            $('#pesquisar').on('click', function(e) {
+                e.preventDefault(); // Impede a submissão tradicional do formulário
+
+                var classe = $('#classe').val();
+                var periodo = $('#periodo').val();
+                var turma = $('#turma').val();
+                var anoletivo = $('#anolectivo').val();
+
+            });
+        });
     </script>
 </head>
 
@@ -226,15 +278,15 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <div class="navbar-nav">
                     @if (Auth::check() && $funcionario && $funcionario->foto)
-                        <!-- Verifica se o usuário está logado e tem uma imagem de perfil -->
-                        <a class="nav-link" href="{{ route('utilizador.perfil') }}">
-                            <img src="{{ asset('img/upload/funcio/' . $funcionario->foto) }}" height="30"
-                                width="30" alt="Imagem do Usuário">
-                        </a>
+                    <!-- Verifica se o usuário está logado e tem uma imagem de perfil -->
+                    <a class="nav-link" href="{{ route('utilizador.perfil') }}">
+                        <img src="{{ asset('img/upload/funcio/' . $funcionario->foto) }}" height="30"
+                            width="30" alt="Imagem do Usuário">
+                    </a>
                     @else
-                        <a class="nav-link " href="{{ route('utilizador.perfil') }}">
-                            <img src="{{ asset('img/blade/logo.png') }}" height="30" width="30" alt="Logo">
-                        </a>
+                    <a class="nav-link " href="{{ route('utilizador.perfil') }}">
+                        <img src="{{ asset('img/blade/logo.png') }}" height="30" width="30" alt="Logo">
+                    </a>
                     @endif
                     <a class="nav-link " href="{{ route('sair') }}">Sair</a>
                 </div>

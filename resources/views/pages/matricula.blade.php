@@ -6,6 +6,10 @@
 <div class="container bg-light">
     <div class="card-header d-flex justify-content-between align-items-center pt-4 m-0">
         <h4 class="mb-0">Lista alunos matriculados</h4>
+        <a href="#getAlunoTurma" data-bs-toggle="modal" data-bs-target="#getAlunoTurma"
+            class="btn btn-warning text-light" title="Pesquisar aluno por turma">
+            <i class="fa fa-search"></i>
+        </a>
         <a href="#Cadastro" onclick="limpar()" data-bs-toggle="modal" data-bs-target="#Cadastro"
             class="btn btn-success text-light" title="Configurar novo ano Letivo">
             <i class="fa fa-circle-plus"></i>
@@ -172,6 +176,62 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Pesquisar aluno turma -->
+<div class="modal fade " id="getAlunoTurma" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-lg tela" role="document">
+        <div class="modal-content bg-light">
+            <div class="modal-header ">
+                <h5 class="modal-title" id="modalTitleId">Buscar aluno/turma</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body ">
+                <div class="container-fluid">
+                    <form action="{{ route('relatorio.turmaluno') }}" id="FormAlunoTurma" method="GET"
+                        enctype="multipart/form-data" class="row g-3">
+                        @csrf
+                        <input type="hidden" name="sala" id="sala">
+                        <div class="col-3">
+                            <label for="classe" class="form-label">Classe</label>
+                            <select id="classe" class="form-control" name="classe" required>
+                                <option value="7ª">7ª</option>
+                                <option value="8ª">8ª</option>
+                                <option value="9ª">9ª</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <label for="periodo" class="form-label">Período</label>
+                            <select id="periodo" class="form-control" name="periodo" required>
+                                <option value="Manhã">Manhã</option>
+                                <option value="Tarde">Tarde</option>
+                                <option value="Noite">Noite</option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <label for="turma" class="form-label">Turma</label>
+                            <select class="form-select" id="turmas" name="turma" required>
+                            </select>
+                        </div>
+
+                        <div class="col-3">
+                            <label for="anolectivo" class="form-label">Ano Letivo</label>
+                            <select id="anolectivo" class="form-control" name="anolectivo" required>
+                                @foreach ($config as $conf)
+                                <option value="{{ $conf->anoletivo }}">{{ $conf->anoletivo }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="modal-footer ">
+                            <button type="submit" class="btn btn-primary">Pesquisar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     function acessoNegado() {
         Swal.fire({

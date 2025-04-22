@@ -35,6 +35,8 @@ class RelatorioController extends Controller
 
     public function show(Request $request)
     {
+        $userId = Auth::id();
+        $funcionario = Funcionarios::where('Users_id', $userId)->first(); // Acessa o funcionário relacionado
             $header = Matricula::with('turma')
                 ->whereHas('turma', function ($query) use ($request) {
                     $query->where('descricao', $request->turma)
@@ -42,6 +44,7 @@ class RelatorioController extends Controller
                         ->where('periodo', $request->periodo);
                 })
                 ->first();       
+
 
             $alunos = Matricula::with(['inscricao', 'turma', 'usuario'])
                 ->whereHas('turma', function ($query) use ($request) {
@@ -53,9 +56,14 @@ class RelatorioController extends Controller
                 ->sortBy(function ($matricula) {
                     return $matricula->inscricao->nomealuno;
                 });
-
+$ultimoAno = ConfigIni::orderBy('anoletivo', 'desc') // Ordena por anoletivo decrescente
+            ->selectRaw('anoletivo')                // Seleciona os campos necessários
+            ->first();                                     // Pega o primeiro registro
+        $config = ConfigIni::where('anoletivo', $ultimoAno->anoletivo)
+            ->selectRaw('anoletivo, salas')
+            ->get();
              if ($header) {
-                return view('relatorios.alunoturma', compact('alunos', 'request', 'header'));
+                return view('pages.alunoturma', compact('alunos', 'request', 'header','funcionario','config'));
              }   else {
                 Alert::warning('Atenção', 'Turma sem aluno!');
                 return redirect()->back();
